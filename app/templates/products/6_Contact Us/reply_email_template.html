@@ -1,0 +1,25 @@
+{% import "helpers.html" as helpers %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <header>
+
+    </header>
+    <h3>Reply To Ticket Number Ref: {{ ticket_number }},</h3>
+
+    <p>Dear {{ name | title }},</p>
+    <br>
+    <pre>{{ message }}</pre>
+    <br><br>
+    <p>Once Again Thank You For Choosing ODLANAHOR</p>
+
+    <br>
+    <p>Best Regards,</p>
+    <p>{{ employee_name |title }}</p>
+    <p>The Odlanahor Team</p>
+
+  </body>
+</html>

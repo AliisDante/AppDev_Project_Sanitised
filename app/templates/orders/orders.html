@@ -1,0 +1,314 @@
+{% extends "admin_base.html" %}
+{% set active_page = "orders" %}
+{% block title %}Odlanahor - Orders{% endblock %}
+{% block head %}
+<head>
+    <link rel="stylesheet" href="../../static/styles/orders.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#ordersTable').dataTable();
+        });
+    </script>
+</head>
+{% endblock %}
+{% block content %}
+
+<!-- Modals -->
+{% from 'orders/_createOrders.html' import createOrders %}
+{{ createOrders(products) }}
+
+<!-- Content -->
+<div class="cont">
+    <div class="summary">
+        <h1 class="row">Summary</h1>
+        <div class="boxes-wrap row">
+        <div class="sum-box prod-box col">
+            <div class="left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="133" height="126" viewBox="0 0 133 126">
+                    <g id="Group_85" data-name="Group 85" transform="translate(-369 -281)">
+                        <ellipse id="Ellipse_5" data-name="Ellipse 5" cx="66.5" cy="63" rx="66.5" ry="63" transform="translate(369 281)" fill="rgba(250,73,70,0.15)"/>
+                        <path id="ic_build_24px" d="M81.882,64.036l-33.868-32c3.35-8.087,1.489-17.58-5.583-24.26C34.988.749,23.823-.658,14.891,3.21l16,15.119L19.729,28.876,3.354,13.758C-1.112,22.2.749,32.744,8.192,39.776a24.9,24.9,0,0,0,25.68,5.274l33.868,32a3.745,3.745,0,0,0,5.21,0l8.56-8.087c1.861-1.406,1.861-3.868.372-4.922Z" transform="translate(392.044 303.9)" fill="#fa4946"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="right">
+                <h1 class="sum-num">
+                    {{ summaryCount['Production'] }}
+                </h1>
+                <span class="sum-text">
+                    Production
+                </span>
+            </div>
+        </div>
+        <div class="sum-box pend-box col">
+            <div class="left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="127" height="119" viewBox="0 0 127 119">
+                    <g id="Group_86" data-name="Group 86" transform="translate(-897 -288)">
+                        <g id="Group_88" data-name="Group 88">
+                        <path id="ic_av_timer_24px" d="M38.316,63.248a4.416,4.416,0,1,0,4.415-4.3A4.373,4.373,0,0,0,38.316,63.248ZM38.316,3V20.214h8.829V11.951C62.11,14.06,73.632,26.54,73.632,41.731c0,16.654-13.817,30.124-30.9,30.124s-30.9-13.47-30.9-30.124A29.314,29.314,0,0,1,18.8,22.71L42.731,46.034l6.224-6.068L18.936,10.7v.086A38.22,38.22,0,0,0,3,41.731C3,63.119,20.746,80.461,42.731,80.461c21.94,0,39.731-17.343,39.731-38.731S64.671,3,42.731,3Zm30.9,38.731a4.416,4.416,0,1,0-4.415,4.3A4.373,4.373,0,0,0,69.218,41.731Zm-52.974,0a4.416,4.416,0,1,0,4.415-4.3A4.373,4.373,0,0,0,16.244,41.731Z" transform="translate(918.539 305.769)" fill="#3856ef"/>
+                        <ellipse id="Ellipse_8" data-name="Ellipse 8" cx="63.5" cy="59.5" rx="63.5" ry="59.5" transform="translate(897 288)" fill="rgba(90,0,246,0.15)"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="right">
+                <h1 class="sum-num">
+                    {{ summaryCount['Pending'] }}
+                </h1>
+                <span class="sum-text">
+                    Pending
+                </span>
+            </div>
+        </div>
+        <div class="sum-box disp-box col">
+            <div class="left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="136" height="133" viewBox="0 0 136 133">
+                    <g id="Group_87" data-name="Group 87" transform="translate(-1395 -281)">
+                      <path id="ic_flight_takeoff_24px" d="M4.92,74.992H93.587V84.25H4.92ZM96.247,31.667A6.99,6.99,0,0,0,87.66,26.76L62.88,33.333,30.68,3.57,21.673,5.931l19.32,33.189L17.8,45.275,8.607,38.147,1.84,39.952l8.493,14.627,3.593,6.156,7.467-1.99,24.78-6.573,20.3-5.369,24.78-6.573a7.04,7.04,0,0,0,4.993-8.563Z" transform="translate(1414.16 294.09)" fill="#08ec97"/>
+                      <ellipse id="Ellipse_7" data-name="Ellipse 7" cx="68" cy="66.5" rx="68" ry="66.5" transform="translate(1395 281)" fill="rgba(0,246,196,0.15)"/>
+                    </g>
+                </svg>                  
+            </div>
+            <div class="right">
+                <h1 class="sum-num">
+                    {{ summaryCount['Dispatched'] }}
+                </h1>
+                <span class="sum-text">
+                    Dispatched
+                </span>                
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="orders">
+        <div class="ord-row">
+            <h1>Orders</h1>
+            <div class="create-btn" id="create" data-bs-toggle="modal" data-bs-target="#createForm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15.951" height="15.951" viewBox="0 0 15.951 15.951">
+                    <path id="Path_1269" data-name="Path 1269" d="M10.773,5.988h-1.6v3.19H5.988v1.6h3.19v3.19h1.6v-3.19h3.19v-1.6h-3.19ZM9.975,2a7.975,7.975,0,1,0,7.975,7.975A7.978,7.978,0,0,0,9.975,2Zm0,14.356a6.38,6.38,0,1,1,6.38-6.38A6.389,6.389,0,0,1,9.975,16.356Z" transform="translate(-2 -2)"/>
+                </svg>
+                <span> Create </span>  
+            </div>
+        </div>
+        <div class="orders-twrap">
+        <table class="orders-table table" id="ordersTable">
+            <thead>
+                <tr>
+                    <th class="a-center">Order ID</th>
+                    <th class="a-center no-sort">Status</th>
+                    <th class="a-center">Days Remaining</th>
+                    <th class="a-center no-sort">Ex. Delivery Date</th>
+                    <th class="a-center no-sort">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through order DB  -->
+                {% for order in orders %}
+                {% if order.status != 'Delivered' %}
+                <tr>
+                    <td class="a-center">{{ order.id }}</td>
+                    <td class="a-center">{{ order.status }}</td>
+                    {% if deliver[order.id][0] > 0 %}
+                    <td class="a-center">{{ deliver[order.id][0] }} days</td>
+                    {% else %}
+                    <td class="a-center overdue">{{ deliver[order.id][0] }} days</td>
+                    {% endif %}
+                    <td class="a-center">{{ deliver[order.id][1] }}</td>
+                    <td>
+                        <div class="actions">
+                            <ul>
+                              <li>
+                                <a href="/orders/view/{{order.id}}" class="view-btn">
+                                    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.998 5c-4.078 0-7.742 3.093-9.853 6.483-.096.159-.145.338-.145.517s.048.358.144.517c2.112 3.39 5.776 6.483 9.854 6.483 4.143 0 7.796-3.09 9.864-6.493.092-.156.138-.332.138-.507s-.046-.351-.138-.507c-2.068-3.403-5.721-6.493-9.864-6.493zm.002 3c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4zm0 1.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5-2.5-1.12-2.5-2.5 1.12-2.5 2.5-2.5z" fill-rule="nonzero"/></svg>
+                                </a>
+                              </li>
+                              <li>
+                                <form action="{{url_for('update_order', orderid=order.id)}}" method="POST">
+                                    <button 
+                                        class="dropdown-item update-btn" 
+                                        type="button" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#updateModal_{{ order.id }}"
+                                        value="{{ order.id }}"
+                                    >
+                                    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m4.481 15.659c-1.334 3.916-1.48 4.232-1.48 4.587 0 .528.46.749.749.749.352 0 .668-.137 4.574-1.492zm1.06-1.061 3.846 3.846 11.321-11.311c.195-.195.293-.45.293-.707 0-.255-.098-.51-.293-.706-.692-.691-1.742-1.74-2.435-2.432-.195-.195-.451-.293-.707-.293-.254 0-.51.098-.706.293z" fill-rule="nonzero"/></svg>
+                                    </button>
+                                    
+                                    <div class="modal fade" id="updateModal_{{ order.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h1 class="modal-title fs-5">Update</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-3">
+                                                {% if order.status == 'Pending' %}
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Items</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Requests</label>
+                                                </div>
+                                                <div class="prods-row">
+                                                    {% for item in order.items %} 
+                                                    <div class="itemRow mb-2 itemRow{{ order.id }}" id="itemRow{{ order.id }}_{{ loop.index }}">
+                                                    <div class="col-md-6">
+                                                        <div class="items-row">
+                                                            <select id="inputItems{{ order.id }}_{{ loop.index }}" class="form-select inputItems inputItems{{ order.id }}" name="items{{ order.id }}_{{ loop.index }}">
+                                                                {% for product in products %}
+                                                                {% if product.id == item.item | int %}
+                                                                <option selected value="{{ item.item }}" id="{{ product.quantity }}">{{ product.name }}</option>
+                                                                {% else %}
+                                                                <option value="{{ product.id }}" id="{{ product.quantity }}">{{ product.name }}</option>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            </select>
+                                                            <div class="change-quantity">
+                                                                {% if item.quantity == 1 %}
+                                                                <button class="rmv disabled-btn" id="rmv{{ order.id }}_{{ loop.index }}" disabled> - </button>
+                                                                {% else %}
+                                                                <button class="rmv" id="rmv{{ order.id }}_{{ loop.index }}"> - </button>
+                                                                {% endif %}
+                                                                <input type="text" id="item_quan{{ order.id }}_{{ loop.index }}" class="item_quan" value="{{ item.quantity }}" name="quantity{{ order.id }}_{{ loop.index }}">
+                                                                <button class="add" id="add{{ order.id }}_{{ loop.index }}" > + </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control" name="requests{{ order.id }}_{{ loop.index }}" placeholder="Specific Customer Requests" value="{{ item.requests }}">
+                                                    </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                                {% endif %}
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Customer Name</label>
+                                                    <input type="text" class="form-control" id="inputName{{ order.id }}" name="cname{{ order.id }}" placeholder="Name" value="{{ order.name }}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Country</label>
+                                                    <select id="inputCountry{{ order.id }}" class="form-select" name="country{{ order.id }}">
+                                                    <option selected value="{{ order.country }}">{{ order.country }}</option>
+                                                    {% if order.country != 'Singapore' %}
+                                                    <option value="Singapore">Singapore</option>
+                                                    {% endif %}
+                                                    {% if order.country != 'Sweden' %}
+                                                    <option value="Sweden">Sweden</option>
+                                                    {% endif %}
+                                                    </select>              
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Contact Number</label>
+                                                    <div class="contact">
+                                                    <select id="inputCountryCode{{ order.id }}" class="form-select inputCountryCode" name="cCode{{ order.id }}">
+                                                        <option selected value="{{ order.contactCode }}">{{ order.contactCode }}</option>
+                                                        {% if order.contactCode != '+65' %}
+                                                        <option value="+65">+65</option>
+                                                        {% endif %}
+                                                        {% if order.contactCode != '+46' %}
+                                                        <option value="+46">+46</option>
+                                                        {% endif %}
+                                                    </select>
+                                                    <input type="number" class="form-control inputNumber" id="inputNumber{{ order.id }}" name="cnumber{{ order.id }}" value="{{ order.contactNum }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Address</label>
+                                                    <input type="text" class="form-control" id="inputAddress{{ order.id }}" name="address{{ order.id }}" placeholder="Address to deliver to" value="{{ order.address }}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="inputEmail{{ order.id }}" name="email{{ order.id }}" placeholder="sample@example.com" value="{{ order.email }}">
+
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label class="form-label mt-3">Status</label>
+                                                            <select id="status{{ order.id }}" class="form-select" name="status{{ order.id }}">
+                                                                <option value="{{ order.status }}">{{ order.status }}</option>
+                                                                {% if order.status != 'Pending' %}
+                                                                <option value="Pending">Pending</option>
+                                                                {% endif %}
+                                                                {% if order.status != 'Production' %}
+                                                                <option value="Production">Production</option>
+                                                                {% endif %}
+                                                                {% if order.status != 'Dispatched' %}
+                                                                <option value="Dispatched">Dispatched</option>
+                                                                {% endif %}
+                                                                {% if order.status != 'Delivered' %}
+                                                                <option value="Delivered">Delivered</option>
+                                                                {% endif %}
+                                                            </select> 
+                                                        </div>
+                                
+                                                        <div class="col-md-8">
+                                                            <label for="discount" class="form-label mt-3">Discount Code</label>
+                                                            <input type="text" class="form-control" id="discount" name="discount{{ order.id }}" value="{{ order.discount_code }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Notes</label>
+                                                    <input type="text" class="form-control inputNotes" id="inputNotes{{ order.id }}" name="notes{{ order.id }}" placeholder="Anything to note" value="{{ order.notes }}">
+                                                </div>
+                                                <input type="hidden" name="validDisc{{ order.id }}" name="notes{{ order.id }}" value="{{ discounts }}">
+                                                <input type="hidden" name="validProducts{{ order.id }}" name="notes{{ order.id }}" value="{{ products }}">
+                                                <div class="modal-footer col-12 mt-5">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                                                    <button type="submit" class="btn btn-primary submitBtns" value="{{ order.id }}">Update</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                              </li>
+                              <li>
+                                <form action="{{url_for('delete_order', orderid=order.id)}}" method="POST">
+                                    <button 
+                                        class="dropdown-item del-btn" 
+                                        type="button" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#deleteModal_{{ order.id }}"
+                                    >
+                                    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z" fill-rule="nonzero"/></svg>
+                                    </button>
+                                    
+                                    <div class="modal fade deleteModal" id="deleteModal_{{ order.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-body">
+                                                <h2>Delete Order #{{ order.id }}?</h2>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                              <button type="submit" class="btn btn-primary">Yes</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                </form>
+                              </li>
+                            </ul>
+                          </div>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+{% block script %} 
+<script src="{{ url_for('static', filename='scripts/ordersForm.js') }}"></script>
+{% endblock %}
+
+{% endblock %}

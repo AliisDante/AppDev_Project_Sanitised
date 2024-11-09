@@ -1,0 +1,349 @@
+{% extends 'products_base.html' %}
+
+{% block title %} {{ product.name }} {% endblock %}
+{% block style %}
+  {% include 'products/css_for_front_end/product_view.css' %}
+    .card-body a ,.card-body button{
+
+        margin-right:10px;
+    }
+{% endblock %}
+
+{% block content %}
+    <section class="mt-5">
+        <div class="row">
+            <div class="col-sm-12 col-md-5 text-center ">
+
+                <img src="{{ url_for('static' , filename='productsDB/'~ product.picture_1 )}}" width="90%" height="450px" alt="image" />
+            </div>
+            <div class="col-sm-12 col-md-7 mt-5 mt-md-0">
+               <div class="box">
+                   <div class="box_content">
+                       <h1 class="pt-4">{{ product.name }}</h1>
+                       <div class="right">
+                           <i class="bi bi-heart"></i>
+                       </div>
+
+{#                   For rating #}
+
+                       {% set count = namespace(value= 0) %}
+                       {% set rating_count = namespace(value=0) %}
+                       {% for review in reviews %}
+                            {% if review.product_id == product.id %}
+                                {% set count.value =  count.value + 1 %}
+                                {% set rating_count.value = rating_count.value + review.rating %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if count.value != 0  %}
+                            {% set rating_avg = rating_count.value // count.value %}
+                            <div class="stars-inline-block">
+                                {% for i in range(rating_avg) %}
+                                    <i class="bi bi-star-fill"></i>
+                                {% endfor %}
+
+                                {% set rating_avg_left = 5 - rating_avg %}
+                                {% for i in range(rating_avg_left) %}
+                                    <i class="bi bi-star"></i>
+
+                                {% endfor %}
+                            <a href="#review" style="color:black;"><h5 class="inline pl-2 underline"> ({{ counter }} reviews) </h5></a>
+
+                            </div>
+                        {% else %}
+                            <div class="stars-inline-block">
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <a href="#review" style="color:black;"><h5 class="inline pl-2 underline"> ({{ counter }} reviews) </h5></a>
+                            </div>
+                        {% endif %}
+                {#End of Rating#}
+                        <div class="product-price">
+                            <span class="pricebox  discounted_price">{{ "$%.2f"| format(discounted_price)}}</span>
+                            <div class="wrap">
+                                <span class="price_before_discount">{{ "$%.2f"| format(product.price)}}</span>
+                                <span class="discount_percentage">-{{ "%.0f" | format(discount) }}%</span>
+                            </div>
+
+
+                        </div>
+
+
+                       {% from "includes/formHelper.html" import render_field %}
+                       <form method="post" action="{{ url_for( 'AddToCart') }}">
+                    {#  Color selection #}
+
+                              <div class="form-group p-1">
+                                  <div class="product-color">
+                                      <div class="button_wrap">
+
+                                           {%  set colors =  product.color.split(',') %}
+                                            <input type="hidden" value="{{ product.color }}" id="colours_available">
+                                            <h5 id="color_label"> Selected Color : <span id="color_highlighted"></span> </h5>
+                                             {%  for i in colors  %}
+
+{#                                                 {%  set col =color.split(':') %}#}
+                                                 <button onclick="button_selected(this.id)" id="{{ i | trim |lower }}" type="button" class="{{ i | trim | lower }} selection "></button>
+                                             {% endfor %}
+                                                 <input type="hidden" value='' id="selected_color" name="selected_color">
+
+                                      </div>
+                                  </div>
+                              </div>
+
+                               <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                               <div class="form-group p-1">
+                                   <h5>Quantity :  </h5>
+                                    <button class="minus-button fw-bold btn btn-danger  " type="button" disabled>-</button>
+                                    <input  type="number" min="1", max="{{ quantity }}" class="btn btn-light" value="1" name="quantity" id="quantity">
+{#                                   <input type="number" name="new-quantity" value="1" class="me-3 rounded-2 px-2 h-100">#}
+                                   <button class="plus-button fw-bold btn btn-success " type="button">+</button>
+
+
+
+                                   <h6 class="text-danger pt-4">Stocks Available : <span id="stocks_available">{{ product.quantity }} </span></h6>
+                              </div>
+
+                               <input type="submit" href="/" value="Add To Cart" id="add_to_cart_btn" class="addtocart_product">
+                               <input type="hidden" name="redirect-url" value="{{ redirect_url }}">
+                       </form>
+
+                       <p class="text-dark"><i class="bi bi-gift "></i> Free Shipping for Orders above <span class="text-secondary" >$500.00</span></p>
+                        <p class="text-dark"><i class="bi bi-truck "></i> Estimated Delivery : <span class="text-secondary"> 9 to 10 Days </span></p>
+
+                   </div>
+               </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="product_section2">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Product Details</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <pre>{{ product.description }}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mt-5">
+                <div class="card" id="review">
+                    <div class="card-header">
+                        <h3>Product ratings<a href="/review/{{ product.id }}" class="btn btn-dark" style="float:right;margin-right: 20px">Add A Review</a></h3>
+                    </div>
+                    <div class="card-body">
+{#                        <p>Some text goes here</p>#}
+                        {% for x in reviews %}
+                            <div class="row">
+                                <div class="col-md-2 col-xs-3 col-lg-1 text-center">
+                                    <img src="{{ url_for('static' , filename='Cust_Profile_Icon.svg')}}" class="mt-2" width='60px'>
+                                </div>
+                                <div class="col-xs-9 col-md-10 col-lg-11  ">
+                                    <h5 class="user">{{ x.user |title }}</h5>
+
+                                    <div class="rating">
+                                        {% if x.rating == 5 %}
+                                            <div class="stars-inline-block pt-2">
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                             </div>
+                                        {% elif x.rating == 4 %}
+                                            <div class="stars-inline-block pt-2">
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star"></i>
+                                             </div>
+                                        {% elif x.rating == 3 %}
+                                            <div class="stars-inline-block pt-2">
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star"></i>
+                                                <i class="bi bi-star"></i>
+                                             </div>
+                                        {% elif x.rating == 2 %}
+                                            <div class="stars-inline-block pt-2">
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star"></i>
+                                                <i class="bi bi-star"></i>
+                                                <i class="bi bi-star"></i>
+                                             </div>
+
+                                        {% elif x.rating == 1 %}
+                                            <div class="stars-inline-block pt-2">
+                                                <i class="bi bi-star-fill"></i>
+                                                <i class="bi bi-star"></i>
+                                                <i class="bi bi-star"></i>
+                                                <i class="bi bi-star"></i>
+                                                <i class="bi bi-star"></i>
+                                             </div>
+
+                                        {% endif %}
+                                    </div>
+                                    <p class="date">{{ x.date_of_post }}</p>
+
+                                    <h4 class="mt-3">{{ x.title }}</h4>
+                                    <p>{{ x.content }}</p>
+
+                                {% if x.email == current_user.email or position == 'admin' %}
+                                    <a href="/review/{{ product.id }}/{{ x.id }}/update" class="btn btn-warning">Update</a>
+        {#                            <a href="/review/{{ product.id }}/{{ x.id }}/delete" class="btn btn-danger">Delete</a>#}
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteReview-{{ x.id }}">Delete</button>
+                                {% endif %}
+
+                                </div>
+                                 <hr class="mt-4">
+                            </div>
+
+
+
+
+                            <!-- Modal -->
+                                    <div class="modal fade" id="deleteReview-{{ x.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteReviewLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteReviewLabel">You Are About to Delete this Review</h5>
+
+                                          </div>
+                                          <div class="modal-body">
+
+                                                <h4>{{ x.title }}</h4>
+                                                <p>{{ x.content }}</p>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <a href="/review/{{ product.id }}/{{ x.id }}/delete" class="btn btn-danger">Confirm</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                        <!--End Modal -->
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+         let minus_button = document.querySelector("button.minus-button");
+         let plus_button = document.querySelector("button.plus-button");
+         let quantity_input = document.getElementById('quantity')
+         let stocks_left = document.getElementById('stocks_available')
+         let colours_available = document.getElementById('colours_available')
+         let color_selected = document.getElementById('selected_color')
+         let color_highlighted = document.getElementById('color_highlighted')
+         let add_to_cart_btn = document.getElementById('add_to_cart_btn')
+
+           function set_buttons() {
+                minus_button.disabled = false;
+                plus_button.disabled = false;
+
+                if (quantity_input.value <= 1) {
+                  minus_button.disabled = true;
+                }
+
+                if (quantity_input.value >= 10 || quantity_input.value >= parseInt(stocks_left.innerText) ) {
+                  plus_button.disabled = true;
+                }
+              };
+
+         minus_button.addEventListener("click", () => {
+         quantity_input.value = Math.max(Number(quantity_input.value) - 1, 1);
+
+
+          set_buttons();
+          });
+
+           plus_button.addEventListener("click", () => {
+            quantity_input.value = Number(quantity_input.value) + 1;
+
+            set_buttons();
+          });
+
+        function set_color(){
+            let list_of_colors = colours_available.value.split(',')
+
+            for (let i=0 ; i <= list_of_colors.length; i++ ){
+                let color = list_of_colors[i].trim().toLowerCase()
+                console.log(color)
+
+                let colour_selection = document.querySelector(`button.${color}`)
+
+                colour_selection.style.background = `${color}`
+
+
+
+                if (i == 0){
+                    colour_selection.classList.add('selected');
+                    color_highlighted.innerText = color
+                    {#Select the first colour available as the default#}
+                    color_selected.value = color;
+                }
+
+                if (i > 0){
+                    colour_selection.style.marginLeft = '10px'
+                }
+
+            }
+        }
+
+        function button_selected(color){
+            {#Change the value of the input field to represent what is selected#}
+
+
+            deselect_button();
+            let button_clicked = document.getElementById(`${color}`);
+            color_highlighted.innerText = color
+            button_clicked.classList.add('selected');
+
+            color_selected.value =  color
+            console.log('color: ',color_selected.value)
+
+
+        }
+
+        function deselect_button(){
+             let all_buttons = document.querySelectorAll('.selection');
+             all_buttons.forEach( (items) => {
+             items.classList.remove('selected')
+          })
+
+        }
+
+        function stocks_available_check(){
+            if(stocks_left.innerText <= 0){
+                stocks_left.innerText = 'Out of Stock';
+                stocks_left.style.color = 'red';
+                add_to_cart_btn.style.opacity = '0.5';
+                add_to_cart_btn.disabled =true;
+                add_to_cart_btn.style.color = 'black';
+            }
+
+        }
+
+        Window.onload = stocks_available_check();
+        Window.onload = set_color();
+        Window.onload = set_buttons();
+
+    </script>
+{% endblock %}

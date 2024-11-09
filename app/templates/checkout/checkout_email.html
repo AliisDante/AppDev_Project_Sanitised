@@ -1,0 +1,28 @@
+{% import "helpers.html" as helpers %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <header>
+      <a href="http://odlanahor.store">
+        <img src="http://odlanahor.store/favicon.ico" alt="">
+      </a>
+    </header>
+    <p>Dear {{ name }},</p>
+    <h3>Thank you for your order!</h3>
+    <p>You have purchased the following products:</p>
+    <div class="cart-products" style="border: 3px solid black;">
+      {% for product_id, product_dictionary in checkout_products.items() %}
+      <div class="cart-product" style="border-bottom: 2px solid #dee2e6; padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem;">
+        <div class="product-key-info" style="display: flex; justify-content: space-between;">
+          <p class="product-name" style="text-decoration: underline;">{{ product_dictionary["name"] }}</p>
+          <p>{{ helpers.format_money(product_dictionary["price"] * product_dictionary["quantity"]) }}</p>
+        </div>
+        <p class="product-short-info" style="font-style: italic;">{{ product_dictionary["quantity"] }} @ {{ helpers.format_money(product_dictionary["price"]) }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

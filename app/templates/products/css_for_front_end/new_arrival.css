@@ -1,0 +1,43 @@
+.carousel-item{
+    height:20rem;
+    background: #777;
+
+}
+
+.original_price{
+    text-decoration: line-through;
+    color: grey;
+    font-size: 80%;
+}
+
+/*Review Stars*/
+.stars-inline-block{
+    display: inline-block;
+    font-size:110%;
+    padding-right: 10px;
+}
+.bi-star-fill , .bi-star-half {
+    color: orange;
+}
+.price_discount{
+    margin-top: 10px;
+    font-weight: bold;
+    font-style: italic;
+    display: block;
+
+    font-size: 1.35rem;
+
+
+
+    color: #0ba80b;
+}
+
+/*For styling of price and home button*/
+.home-shop-container span{
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px 10px 20px ;
+    margin-top:10px;
+    color: #0ba80b;
+
+}

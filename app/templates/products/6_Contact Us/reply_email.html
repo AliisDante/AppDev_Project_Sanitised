@@ -1,0 +1,112 @@
+{% extends 'admin_base.html' %}
+
+{% block title %} Contact US - Reply Ticket {% endblock %}
+{% set active_page = "contactUs_tickets" %}
+{% block style %}
+
+    table, th, td {
+      border: 1px solid black;
+
+    }
+
+    td{
+        padding:20px 10px;
+    }
+
+    th{
+        text-align:center;
+         padding: 12px 0 ;
+    }
+
+    pre {
+  white-space: pre-wrap;
+}
+
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-1"></div>
+
+    <div class="col-10">
+            <h1 class="text-center mt-5 mb-4"><a href="/contactUs/ticket/view" class="btn btn-secondary" style="float: left;">Back</a> Ticket Number <span style="color: darkblue; font-weight: bold; text-decoration: underline;">{{ ticket.ticket_number }}</span></h1>
+            <h4>Customer Info</h4>
+            {% from 'includes/formHelper.html' import render_field %}
+            <form action="" method="post" id="reply_ticket">
+                <div class="row">
+                    <div class="col-4">
+                        <label for="name">Name</label>
+                        <input type="text" name="recipient_name" id="name" class="form-control" disabled value="{{ ticket.name }}">
+                    </div>
+                    <div class="col-4">
+                        <label for="email">Email</label>
+                        <input type="text" name='recipient_email' id="email" class="form-control" disabled value="{{ ticket.email }}">
+                    </div>
+                    <div class="col-4">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" class="form-control" id="phone" disabled value="{{ ticket.phone_number }}">
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-4">
+                        <label for="type">Type</label>
+                        <input type="text" class="form-control" disabled value="{{ ticket.type }}">
+                    </div>
+                    <div class="col-8">
+                        <label for="Subject">Subject</label>
+                        <input type="text" class="form-control" name="reply_subject" disabled value="{{ ticket.subject }}">
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <label>Message</label>
+                    <pre class="form-control"  >{{ ticket.message }}</pre>
+                </div>
+
+
+                <h2 class="mt-5 mb-3 text-success text-center">Reply Message</h2>
+                <label for="employee_name" dis>Employee Name</label>
+                <input type="text" name='employee_name'  disabled value="{{ employee_name }}" class="form-control">
+                <label for="reply_subject" class="mt-4">Subject</label>
+                <input type="text" name='reply_subject' id="reply_subject" class="form-control" required>
+                <label for="reply_message" class="mt-4">Reply Message</label>
+                <textarea rows="10" name='reply_message' id="reply_message" width="100%" class="form-control mt-1" required></textarea>
+
+
+                <div class="row">
+                    <div class="col-2">
+                        <input type="submit" value="Send Message" class="btn btn-secondary mt-3 mb-5 px-4 py-2" id='submit_reply' onclick="submit_button()">
+                    </div>
+                    <div class="col-1">
+                         <div class="spinner-border mt-3 loading " id='loading' role="status" aria-hidden="true"></div>
+                    </div>
+                </div>
+            </form>
+
+
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+    <script>
+        let submit_btn = document.getElementById('submit_reply')
+        let loading_btn = document.getElementById('loading')
+        let reply_subject = document.getElementById('reply_subject')
+        let reply_message = document.getElementById('reply_message')
+        let form = document.getElementById('reply_ticket')
+        function set_submit_btn(){
+            loading_btn.style.display = 'none';
+        }
+        function submit_button(){
+            console.log('clicekd')
+
+            if(reply_message.value.length > 0 && reply_subject.value.length >0){
+               loading_btn.style.display = 'flex';
+                form.submit()
+            }
+       }
+
+       Window.onload = set_submit_btn()
+    </script>
+{% endblock %}

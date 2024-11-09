@@ -1,0 +1,131 @@
+{% extends "customer_base.html" %}
+{% import "helpers.html" as helpers %}
+
+{% block head %}
+<style>
+.product .left, .product .right {
+  flex-grow: 1;
+}
+
+.product .right {
+  text-align: right;
+}
+
+.product .right .delete-button {
+  margin-right: 1rem;
+}
+
+.quantity-box input[name=new-quantity] {
+  width: 5rem;
+  color: black;
+  border-color: lightgrey;
+  border-style: solid;
+  border-collapse: collapse;
+}
+
+.quantity-box button {
+  width: 2rem;
+  height: 2rem;
+}
+
+.circle-button {
+  border-radius: 9999px;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border-color: black;
+  border-style: solid;
+  box-sizing: content-box;
+  padding: 1px 1px 1px 1px;
+  line-height: 0.5px;
+}
+
+.disabled {
+  opacity: 0.7;
+}
+
+.price-information div {
+  width: 10rem;
+}
+</style>
+
+<script src="{{ url_for('static', filename='js/cart/cart.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="content px-4">
+  <div class="heading d-flex align-items-end mt-3">
+    <h3 class="me-2 mb-0 fw-bold">Cart</h3>
+    <p class="mb-0">{{ cart|length }} item{% if cart|length != 1 %}s{% endif %} in total</p>
+  </div>
+
+  <hr class="mt-1">
+
+  <div class="products">
+    <div class="heading border border-dark border-3 row py-2 px-3">
+      <p class="col-6 col-lg-4 mb-0 fs-5 fw-bold">Product</p>
+      <div class="col-6 col-lg-3 fs-5 fw-bold text-end text-lg-start">
+        Quantity
+      </div>
+      <div class="col-6 col-lg-3 fs-5 fw-bold text-lg-end">
+        <span>Price</span>
+        <span class="fw-normal fs-6">/qty</span>
+      </div>
+      <div class="col-6 col-lg-2 fs-5 fw-bold text-end delete-heading">
+        Delete
+      </div>
+    </div>
+    {% for cart_key, product_dictionary in cart.items() %}
+    {% set product_id, product_colour = disassemble_cart_key(cart_key) %}
+    {% set product_object = cart_products_objects[product_id] %}
+    <form class="product row border-bottom border-start border-end border-3 border-dark align-items-center py-2 px-3" method="post">
+      <img src="{{ get_product_image_url(product_object) }}" alt="Product Image" class="col-12 px-5 pt-3 pb-5 pb-lg-3 ps-lg-2 pe-lg-0 col-lg-1">
+      <p class="product-name fs-5 mb-0 col-6 col-lg-3">{{ product_dictionary["name"] }} ({{ product_dictionary["color"]|title }})</p>
+      <div class="quantity-box col-6 col-lg-3 d-flex align-items-center">
+        <div class="filler flex-grow-1 flex-lg-grow-0"></div>
+        <button class="minus-button fw-bold btn btn-danger p-1 me-3" type="button">-</button>
+        <input type="text" name="new-quantity" value="{{ product_dictionary['quantity'] }}" class="me-3 rounded-2 px-2 h-100" readonly data-product-stock="{{ product_object.quantity }}" data-max-quantity-allowed="{{ max_quantity_allowed }}">
+        <button class="plus-button fw-bold btn btn-success p-1" type="button">+</button>
+        <input type="hidden" name="colour" value="{{ product_colour }}">
+      </div>
+      <div class="col-6 col-lg-3 mt-4 mt-lg-0 text-lg-end fs-5">{{ helpers.format_money(product_dictionary["price"]) }}</div>
+      <div class="col-6 col-lg-2 mt-4 mt-lg-0 text-end">
+        <button type="submit" name="action" value="delete" formaction="/cart/{{ product_id }}/delete" class="btn btn-danger fw-bold delete-button">Delete</button>
+      </div>
+      <button type="submit" name="action" value="change" formaction="/cart/{{ product_id }}/update" class="d-none change-button">Change</button>
+    </form>
+    {% endfor %}
+  </div>
+
+  <hr>
+  
+  <div class="price-information d-flex flex-column align-items-end">
+    <div class="discount mb-1 mt-2 d-flex justify-content-between">
+      <span class="fw-bold">Discount:</span>
+      <span class="fst-italic text-end">Applied at checkout</span>
+    </div>
+    <div class="shipping mb-1 mt-2 d-flex justify-content-between">
+      <span class="fw-bold">Shipping:</span>
+      <span class="text-end">{{ helpers.format_money(shipping_fee) }}</span>
+    </div>
+    <div class="subtotal mb-1 mt-2 d-flex justify-content-between fw-bold">
+      <span>Subtotal:</span>
+      <span>{{ helpers.format_money(subtotal) }}</span>
+    </div>
+    <div class="tax mb-1 mt-2 d-flex justify-content-between">
+      <span class="fw-bold">Tax:</span>
+      <span>{{ helpers.format_money(tax) }}</span>
+    </div>
+    <div class="total mb-1 mt-2 d-flex fw-bold justify-content-between">
+      <span>Total:</span>
+      <span>{{ helpers.format_money(total) }}</span>
+    </div>
+
+    {% if cart.keys() | length == 0 %}
+    <a class="d-block mt-3 text-end disabled"><button class="btn btn-primary fw-bold" disabled>Checkout</button></a>
+    {% else %}
+    <a href="/checkout" class="d-block mt-3 text-end"><button class="btn btn-primary fw-bold">Checkout</button></a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

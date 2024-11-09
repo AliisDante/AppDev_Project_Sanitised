@@ -1,0 +1,75 @@
+{%  extends 'products_base.html' %}
+
+{% block title %} Cart {% endblock %}
+
+{% block content %}
+        <div class="row">
+        <div class="col-md-12">
+        <table class="table table-sm">
+            <thead>
+                <th>Sr</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                {% for key, product in session['ShoppingCart'].items() %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>
+                        {% if product.product_nature =='N' %}
+                            <img src='{{ url_for('static' , filename='products/imageStorage/NewArrival/'~ product.name ~'.jpg' )}}' alt="{{product.name}}" width="50" height="45" />
+                        {% elif product.product_nature =='P' %}
+                            <img src='{{ url_for('static' , filename='products/imageStorage/Promotional/'~ product.name ~'.jpg' )}}' alt="{{product.name}}" width="50" height="45" />
+                        {% elif product.product_nature == 'R' and product.collection =='H' %}
+                            <img src='{{ url_for('static' , filename='products/imageStorage/Regular/homeOffice'~ product.name ~'.jpg' )}}' alt="{{product.name}}" width="50" height="45" />
+                        {% elif product.product_nature == 'R' and product.collection =='D' %}
+                            <img src='{{ url_for('static' , filename='products/imageStorage/Regular/Dining'~ product.name ~'.jpg' )}}' alt="{{product.name}}" width="50" height="45" />
+                        {% elif product.product_nature == 'R' and product.collection =='B' %}
+                            <img src='{{ url_for('static' , filename='products/imageStorage/Regular/Bedding'~ product.name ~'.jpg' )}}' alt="{{product.name}}" width="50" height="45" />
+                        {% elif product.product_nature == 'R' and product.collection =='L' %}
+                            <img src='{{ url_for('static' , filename='products/imageStorage/Regular/Living'~ product.name ~'.jpg' )}}' alt="{{product.name}}" width="50" height="45"/>
+                        {% endif %}
+{#                        <img src="{{url_for('static', filename='products/imageStorage/'~ product.name ~'.jpg')}}" alt="{{product.name}}" width="50" height="45">#}
+                    </td>
+                    <td>{{product.name}}</td>
+                    <form action="" method="post">
+                    <td>
+                        {% set colors = product.colour_selection.split(',') %}
+                        <label for="colors">Colors: </label>
+                        <select name="color" id="color">
+                            <option value="{{product.color}}" style="display: none;">{{product.color|capitalize}}</option>
+                            {% for color in colors %}
+                            {% set col = color.split(':') %}
+                            <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </td>
+                    <td>${{"%.2f"|format(product.price)}}</td>
+                    {% set subtotal = product.quantity|int * product.price|float  %}
+                    <td>{{ product.quantity }}</td>
+                    <td><button type="submit" class="btn btn-sm btn-info">Update</button> </td>
+                </form>
+                    <td> <a href="" class="btn btn-sm btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-sm">
+           <tr>
+               <td> <a href="" class="btn btn-success"> Order now </a> </td>
+               <td width="35%"></td>
+               <td> <h5>Tax: ${{tax}}</h5></td>
+               <td> <h5>Grand total: ${{ grandtotal }}</h5> </td>
+                <td> <a href="" class="btn btn-danger btn-sm float-right mr-4"> Clear cart</a> </td>
+           </tr>
+        </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

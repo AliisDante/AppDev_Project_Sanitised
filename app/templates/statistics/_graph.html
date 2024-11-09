@@ -1,0 +1,66 @@
+{% macro createLineChart(labels, values) %}
+
+<canvas id="lineChart" width="900" height="550"></canvas>
+<script>
+    let ctx1 = document.getElementById("lineChart").getContext("2d");
+    let lineChart = new Chart(ctx1, {
+        type: "line",
+        data: {
+            labels: {{ labels | safe }},
+            datasets: [
+                {
+                    label: "Total Orders Per Month",
+                    data: {{ values | safe }},
+                    fill: false,
+                    borderColor: "#FA4946",
+                    lineTension: 0.5,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                }],
+            },
+        },
+    });
+</script>
+
+{% endmacro %}
+
+
+{% macro createRingChart(labels, values) %}
+
+<canvas id="ringChart" width="200" height="300"></canvas>
+<script>
+    let ctx2 = document.getElementById("ringChart").getContext("2d");
+    let ringChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: {{ labels | safe }},
+            datasets: [
+                {
+                label: 'Product Categories',
+                data: {{ values | safe }},
+                backgroundColor: [
+                    '#2453D4',
+                    '#FA4946',
+                    '#05E274',
+                    '#F6B400',
+                    '#A82CF9',
+                ],
+                hoverOffset: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+        },
+    });
+</script>
+
+{% endmacro %}

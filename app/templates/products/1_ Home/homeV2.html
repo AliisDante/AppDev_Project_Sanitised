@@ -1,0 +1,278 @@
+{% extends "products_base.html" %}
+
+{% block title %} ODLANAHOR - Home {% endblock %}
+
+{% block style %}
+  {% include 'products/css_for_front_end/homeV2.css' %}
+{% endblock %}
+
+{% block script_1 %}
+    <script async type="text/javascript" src="{{ url_for('static' , filename='products/app.js') }}"></script> <!--Defer means it would run after the html body has been loaded-->
+{% endblock %}
+
+{% block header %}
+    <header class="text-center">
+        <div class="home" id="home">
+            <div id="cover-text" >
+                <h1>ODLANAHOR</h1>
+                <h4 >Get started on your new life with</h4>
+                <h4 >our premium furniture</h4>
+                <a class="btn explore-btn" href="#home-shop" >Explore More</a>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+
+
+    <section class="home-shop hidden" id="home-shop">
+        <div class ='home-shop-heading text-center'>
+            <span>New Arrivals</span>
+            <h3>Shop for our latest collection of furniture here</h3>
+        </div>
+
+
+
+        <div class="home-shop-container container">
+            <div class="row">
+            {% set product_list = [] %}
+            {% for product_item in products %}
+               {%  if product_item.product_nature == 'N'  %}
+                    {% set product_list = product_list.append(product_item) %}
+                {% endif %}
+            {% endfor %}
+            {% if product_list|length > 3 %}
+                {% set latest_3_product_list =[product_list[-3],product_list[-2],product_list[-1]] %}
+            {% else %}
+                {% set latest_3_product_list = product_list %}
+            {% endif %}
+
+
+
+                {% for i in latest_3_product_list %}
+
+
+                        <div class="col-sm-auto col-md-6 col-lg-4  new-arrival-product-title">
+
+                            <div class='home-shop-container-img'>
+
+{#                                <img src="{{ url_for('static' , filename='products/imageStorage/NewArrival/'~ i.name ~'.jpg')}}" width="100%" height="50%" alt="image" />#}
+                                <a href="/productView/{{ i.id }}"><img src="{{ url_for('static' , filename='productsDB/'~ i.picture_1 )}}" width="100%" height="50%" alt="image" /></a>
+                            </div>
+                            <div class="product-box pt-3">
+                                <h3 class="inline">{{ i.name }}</h3>
+                                {% set count = namespace(value= 0) %}
+                                {% set rating_count = namespace(value=0) %}
+                                {%  for review in reviews %}
+                                    {% if review.product_id == i.id %}
+                                        {% set count.value =  count.value + 1 %}
+                                        {% set rating_count.value = rating_count.value + review.rating %}
+                                    {% endif %}
+                                {% endfor %}
+
+
+
+                                {% if count.value != 0  %}
+
+                                    {% set rating_avg = rating_count.value // count.value %}
+
+                                    <div class="stars-inline-block">
+                                        {% for i in range(rating_avg) %}
+                                            <i class="bi bi-star-fill"></i>
+                                        {% endfor %}
+
+                                        {% set rating_avg_left = 5 - rating_avg %}
+                                        {% for i in range(rating_avg_left) %}
+                                            <i class="bi bi-star"></i>
+                                        {% endfor %}
+
+                                    </div>
+                                {% else %}
+                                    <div class="stars-inline-block">
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                    </div>
+                                {% endif %}
+
+                                {% if i.discount == None %}
+                                     {% set discount_percentage = 0 %}
+                                {% else %}
+                                    {% set discount_percentage = i.discount %}
+                                {% endif %}
+
+                                {% set discounted_price = i.price * (1 - discount_percentage/100) %}
+                                <span id='new-arrival-1-price' class="display-block">{{ "$%.2f"| format(discounted_price)}}<a href="/productView/{{ i.id }}"><i class="bi bi-cart2" style='float:right'></i></a></span>
+
+                            </div>
+                        </div>
+
+                {% endfor %}
+
+
+
+{#                <!--Item 1-->#}
+{#                <div class="col-sm-auto col-md-6 col-lg-4  new-arrival-product-title">#}
+{##}
+{#                    <div class='home-shop-container-img'>#}
+{#                        <img src="/static/products/HomePage/Chair1.jpg" width="100%" height="50%" alt="image" />#}
+{#                    </div>#}
+{#                    <div class="product-box pt-3">#}
+{#                        <h3 class="inline">Eveer 100</h3>#}
+{#                        <div class="stars-inline-block">#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-half"></i>#}
+{#                        </div>#}
+{#                        <span id='new-arrival-1-price' class="display-block">S$146 <a href="/shop/static"><i class="bi bi-cart2" style='float:right'></i></a></span>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!--Item 2-->#}
+{#                <div class="col-sm-auto col-md-6 col-lg-4  new-arrival-product-title">#}
+{##}
+{#                    <div class='home-shop-container-img'>#}
+{#                        <img src="/static/products/HomePage/Table1.jpg" width="100%" height="50%" alt="image" />#}
+{#                    </div>#}
+{#                    <div class="product-box pt-3">#}
+{#                        <h3 class="inline">Eveer 100</h3>#}
+{#                        <div class="stars-inline-block">#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-half"></i>#}
+{#                        </div>#}
+{#                        <span id='new-arrival-2-price' class="display-block">S$146 <a href="/shop/static"><i class="bi bi-cart2" style='float:right'></i></a></span>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!--Item 3-->#}
+{#                <div class="col-sm-auto col-md-6 col-lg-4  new-arrival-product-title">#}
+{##}
+{#                    <div class='home-shop-container-img'>#}
+{#                        <img src="/static/products/HomePage/Mattress1.jpg" width="100%" height="110%" alt="image" />#}
+{#                    </div>#}
+{#                    <div class="product-box pt-3">#}
+{#                        <h3 class="inline">Eveer 100</h3>#}
+{#                        <div class="stars-inline-block">#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-half"></i>#}
+{#                        </div>#}
+{#                            <span id='new-arrival-3-price' class="display-block">S$146 <a href="/shop/static"><i class="bi bi-cart2" style='float:right'></i></a></span>#}
+{#                    </div>#}
+{#                </div>#}
+{#            <!--End of 2_NewArrivals-->#}
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="home-categories hidden" id="home-categories">
+        <div class ='home-categories-heading text-center'>
+            <span>ODLANAHOR'S In House Collections</span>
+        </div>
+
+        <div class="container text-center pt-3">
+            <div class="row">
+                <!--Category 1 : Living-->
+                <div class="col-sm-12 col-md-6 col-lg-3 categories hidden">
+                    <div class="card " id="card1-living">
+<!--                        <img src="static/HomePage/Chair1.jpg" width="100%" class="card image-top">-->
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Living</h5>
+<!--                            <p class="card-text text-center">Testing 123</p>-->
+                            <a href="/living" class="btn btn-warning shop-now-btn">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!--Category 2 : Bedding-->
+                <div class="col-sm-12 col-md-6 col-lg-3 categories hidden">
+                    <div class="card " id="card2-bedding">
+<!--                        <img src="static/HomePage/Chair1.jpg" width="100%" class="card image-top">-->
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Bedroom</h5>
+<!--                            <p class="card-text text-center">Testing 123</p>-->
+                            <a href="/bedding" class="btn btn-warning shop-now-btn">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!--Category 3 : Dining-->
+                <div class="col-sm-12 col-md-6 col-lg-3 categories hidden">
+                    <div class="card" id="card3-dining">
+<!--                        <img src="static/HomePage/Chair1.jpg" width="100%" class="card image-top">-->
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Dining</h5>
+<!--                            <p class="card-text text-center">Testing 123</p>-->
+                            <a href="/dining" class="btn btn-warning shop-now-btn">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!--Category 4 : HomeOffice-->
+                <div class="col-sm-12 col-md-6 col-lg-3 categories hidden ">
+                    <div class="card" id="card4-HomeOffice">
+<!--                        <img src="static/HomePage/Chair1.jpg" width="100%" class="card image-top">-->
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Home Office</h5>
+<!--                            <p class="card-text text-center">Testing 123</p>-->
+                            <a href="/homeOffice" class="btn btn-warning shop-now-btn">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+<!--                End of Categories-->
+            </div>
+        </div>
+    </section>
+
+{#    <section id="home-aboutUs" class='hidden'>#}
+{#        <div class="container">#}
+{#            <div class="row pb-5">#}
+{#                <div class="col-sm-12 col-md-6 text-center">#}
+{#                    <img src={{ url_for('static' , filename='products/imageStorage/AboutUs.jpg')}} height="90%" width="80%">#}
+{#                </div>#}
+{##}
+{#                 <div class="col-sm-12 col-md-6">#}
+{#                     <p class="about-heading pt-sm-1">About Us</p>#}
+{#                     <h3>Inspiring homes for all</h3>#}
+{#                     <p>What started as a tiny wood working company in rural Sweden has now become a well established home furnishing brand that brings affordability, design, and comfort to people all over the world. We may have come a long way since our humble beginnings, but we would continue to innovate to create a better everyday life for customers of ENGHUANALDO.</p>#}
+{#<!--                     <p class="pt-3">Locate us in the heartlands of Singapore at<br><span style="font-weight: bold; color:dodgerblue;">BLK 217 Lorong 8 Toa Payoh S310217</span></p>-->#}
+{#                     <button class="btn btn-dark">Learn More</button>#}
+{##}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+        <section id="home-aboutUs" class='hidden'>
+        <div class="container">
+            <div class="row pb-5">
+                <div class="col-sm-12 col-md-6 text-center">
+                    <img src={{ url_for('static' , filename='products/imageStorage/AboutUs.jpg')}} height="90%" width="80%">
+                </div>
+
+                 <div class="col-sm-12 col-md-6">
+                     <p class="about-heading pt-sm-1">About Us</p>
+                     <h3>Inspiring homes for all</h3>
+                     <p>What started as a tiny wood working company in rural Sweden has now become a well established home furnishing brand that brings affordability, design, and comfort to people all over the world. We may have come a long way since our humble beginnings, but we would continue to innovate to create a better everyday life for customers of ODLANAHOR.</p>
+<!--                     <p class="pt-3">Locate us in the heartlands of Singapore at<br><span style="font-weight: bold; color:dodgerblue;">BLK 217 Lorong 8 Toa Payoh S310217</span></p>-->
+                     <a href='/contactUs'class="btn btn-dark">Connect with Us</a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    </section>
+
+
+
+{% endblock %}

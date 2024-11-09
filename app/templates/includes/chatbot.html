@@ -1,0 +1,21 @@
+<div class="chatbot d-none d-lg-block">
+  <button class="chatbot-minimised d-flex flex-column align-items-center justify-content-evenly shadow"><div class="icon mb-0 bi bi-chat-dots-fill"></div></button>
+  <div class="chatbot-popup shrink d-none d-flex flex-column shadow">
+    <div class="heading d-flex justify-content-between align-items-center">
+      <h3 class="mb-0 fw-bold">Odlanahor</h3>
+      <button class="popup-close-button bi bi-x-lg fs-4"></button>
+    </div>
+    <div class="messages-container flex-grow-1 flex-shrink-1">
+      <div class="sample-message d-none">
+        <p class="heading mb-2">
+        <span class="speaker"></span><span>:</span>
+        </p>
+        <div class="message-body"></div>
+      </div>
+    </div>
+    <form class="prompt-zone prompt-form d-flex">
+      <input type="text" name="prompt" autocomplete="off" class="prompt form-control me-3">
+      <button type="submit" class="prompt-submit btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

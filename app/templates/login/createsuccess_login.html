@@ -1,0 +1,25 @@
+{% extends "login_base.html" %}
+{% block title %}Odlanahor - Create success{% endblock %}
+{% block head %}
+<style>
+.back{
+    text-decoration: none;
+    background-color: rgb(238, 238, 238);
+    margin: 20px;
+    padding: 8px;
+    border-radius: 10px;
+    color: black;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+<style>
+    body{
+    background-image: url(../../static/login/bg.png);
+    font-family: 'Poppins', sans-serif;
+  }
+</style>
+
+<p>Account created successfully!</p>
+<a href="/login" class="back">Back to Sign In</a>
+{% endblock %}

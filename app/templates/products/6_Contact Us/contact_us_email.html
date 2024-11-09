@@ -1,0 +1,25 @@
+{% import "helpers.html" as helpers %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <header>
+
+    </header>
+    <p>Dear {{ name }},</p>
+    <h3>Thank You for leaving us a ticket on {{ type }}</h3>
+    <p> We will get back to you with regards your comments as soon as possible</p>
+    <br>
+    <h4>Your Message: </h4>
+    <pre>{{ message }}</pre>
+    <br><br>
+    <p>Please Quote this Ticket Number if asked by our staff: <span style="color: darkblue; text-decoration: underline; font-weight: bold;">{{ ticket_number }}</span></p>
+
+    <br><br>
+    <p>Best Regards,</p>
+    <p>The Odlanahor Team</p>
+
+  </body>
+</html>

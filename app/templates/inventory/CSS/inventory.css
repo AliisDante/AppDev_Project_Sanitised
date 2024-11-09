@@ -1,0 +1,81 @@
+.table-col-2{
+ width:250px;
+}
+th,td{
+border:0;
+}
+
+thead{
+color:rgba(36,83,212,1);
+border-bottom: groove;
+}
+.color-btn{
+color:rgba(36,83,212,1);
+}
+#search{
+border: 1px solid grey;
+}
+.input-fill{
+    background-color:#e5e8fa;
+    color:rgba(36,83,212,1);
+    }
+
+span{
+color:rgba(36,83,212,1);
+font-weight:bold
+}
+
+.product-row{
+display: table-row
+}
+
+
+#img-preview {
+
+  width: 200px;
+  margin-bottom: 20px;
+  margin-right:20px
+}
+#img-preview img {
+  width: 200%;
+  height: auto;
+  display: block;
+}
+[type="file"] {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+[type="file"] + label {
+  font-family: sans-serif;
+  background: #e5e8fa;
+  padding: 10px 30px;
+  border: 2px solid rgba(36,83,212,1);
+  border-radius: .375rem;
+  color: rgba(36,83,212,1);
+  cursor: pointer;
+  transition: all 0.2s;
+
+}
+[type="file"] + label:hover {
+  background-color: #fff;
+  color: rgba(36,83,212,1);
+}
+
+form div{
+    color:#2453D4;
+    font-weight:bold;
+    }
+#modal-body-text{
+text-decoration-color:none;
+}
+
+#ImgFormatError{
+display:none;
+}
+
+.manage-btn:hover,.sort-btn:hover,.filter-btn:hover,.back-btn:hover{
+background-color:white;
+color:#2453D4;
+
+}

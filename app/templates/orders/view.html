@@ -1,0 +1,133 @@
+{% extends "admin_base.html" %}
+{% block title %}Odlanahor - Orders{% endblock %}
+{% block head %}
+<head>
+    <link rel="stylesheet" href="../../static/styles/orders.css">
+    <link rel="stylesheet" href="../../static/styles/orders_view.css">
+</head>
+{% endblock %}
+{% block content %}
+
+<div class="row heading">
+    <h1 class="col-md-6">Order <span class="blue-t">#{{ order.id }}</span></h1>
+    <div class="col-md-6 back-btn">
+        <a href="/orders"> 
+            <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="m9.474 5.209s-4.501 4.505-6.254 6.259c-.147.146-.22.338-.22.53s.073.384.22.53c1.752 1.754 6.252 6.257 6.252 6.257.145.145.336.217.527.217.191-.001.383-.074.53-.221.293-.293.294-.766.004-1.057l-4.976-4.976h14.692c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.692l4.978-4.979c.289-.289.287-.761-.006-1.054-.147-.147-.339-.221-.53-.221-.191-.001-.38.071-.525.215z" fill-rule="nonzero"/>
+            </svg>
+            Back 
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="items-wrap wrap col-md-11">
+        <table class="items-table table">
+            <thead>
+                <tr>
+                    <th>Items Ordered</th>
+                    <th class="a-center">QTY</th>
+                    <th class="a-center">Price</th>
+                    <th class="a-center">Total Price</th>
+                    <th>Requests</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items %}
+                <tr>
+                    <td>{{ name_mapping[item.item] }}</td>
+                    <td class="a-center">{{ item.quantity }}</td>
+                    <td class="a-center">${{ "%.2f"|format(prices[item.item]) }}</td>
+                    <td class="a-center">${{ "%.2f"|format(prices[item.item] * item.quantity) }}</td>
+                    {% if item.requests == "" %}
+                    <td class="a-center"> N/A </td>
+                    {% else %}
+                    <td>{{ item.requests }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="order-details-wrap wrap col-md-7">
+        <table class="order-details-table table">
+            <thead>
+                <tr>
+                    <th>Order Details</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Customer Name</td>
+                    <td class="a-right">{{ order.name }}</td>
+                </tr>
+                <tr>
+                    <td>Contact Number</td>
+                    <td class="a-right">{{ order.contactCode }} {{ order.contactNum }}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td class="a-right">{{ order.address }}</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td class="a-right">{{ order.country }}</td>
+                </tr>
+                <tr>
+                    <td>Tracking ID</td>
+                    <td class="a-right">{{ order.trackingID }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="order-summary-wrap wrap col-md-4">
+        <table class="order-summary-table table table-borderless">
+            <thead>
+                <tr class="row-line">
+                    <th colspan="2">Order Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row-line">
+                    <td>Order Created</td>
+                    <td class="a-right">{{ order_created }}</td>
+                </tr>
+                <tr class="row-line">
+                    <td>Subtotal</td>
+                    <td class="a-right">${{ "%.2f"|format(subtotal) }}</td>
+                </tr>
+                <tr class="row-line">
+                    <td>Shipping Fee</td>
+                    {% if shipping == 0 %}
+                    <td class="a-right"> Free </td>
+                    {% else %}
+                    <td class="a-right">${{ "%.2f"|format(order.shipping_fee) }}</td>
+                    {% endif %}
+                </tr>
+                <tr class="row-line">
+                    <td>Order Discount</td>
+                    {% if order.discount_amount == 0 %}
+                    <td class="a-right"> N/A </td>
+                    {% else %}
+                    <td class="a-right">-${{ "%.2f"|format(order.discount_amount) }}</td>
+                    {% endif %}
+                </tr>
+                <tr><td></td></tr>
+                <tr><td></td></tr>
+                <tr><td></td></tr>
+                <tr class="row-line"><td></td></tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="a-right total_amt">${{ "%.2f"|format((subtotal + order.shipping_fee) - order.discount_amount) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

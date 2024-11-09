@@ -1,0 +1,133 @@
+{% extends "custdash_base.html" %}
+{% set active_page = "settings" %}
+{% block head %}
+<link rel="stylesheet" href="../../../static/styles/accounts.css">
+{% endblock %}
+{% block content %} 
+<style>
+.container{
+	background-color: rgba(162, 183, 251, 0.341);
+	border-radius: 20px;
+	margin-top: 30px;
+	padding: 30px;
+}
+.container table tr{
+	height: 75px;
+}
+.title{
+	width: 250px;
+}
+.data{
+	margin: 10px;
+}
+.acc{
+	margin: 50px;
+}
+.update, .reset{
+	margin: 10px 0px;
+}
+</style>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class='flashes'>
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} " id='alert'>
+<span>{{ message }}</span>
+<button type="button" style='float:right;'class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+
+</div>
+
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+<h1>Profile</h1>
+<section>
+	<div class="container py-5">
+
+  
+	  <div class="row">
+		<div class="col-lg-4">
+		  <div class="card mb-4">
+			<div class="card-body text-center">
+			{% if current_user.gender == "M" %}
+			  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrXh66ZR5-pcHt-LvRPo40zHoCCnzJa_hqzBaO6FSm5pE9j7FMUcD26sIgdOdh-oUILn8&usqp=CAU" alt="avatar"
+				class="rounded-circle img-fluid" style="width: 150px;">
+			{% endif %}
+			{% if current_user.gender == "F" %}
+				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvDeN3aHbzcYhAXmosDsSeE4ZOw8JkFYrOtGeDiwdenqDy8javqObfhZFvia4MrrdT3X0&usqp=CAU" alt="avatar"
+				class="rounded-circle img-fluid" style="width: 150px;">
+				{% endif %}
+			  <h5 class="my-3">{{ current_user.name }}</h5>
+			  <p class="text-muted mb-1"></p>
+			  <p class="text-muted mb-4"></p>
+			</div>
+		  </div>
+		</div>
+		<div class="col-lg-8">
+		  <div class="card mb-4">
+			<div class="card-body">
+				<hr>
+			  <div class="row">
+				<div class="col-sm-3">
+				  <p class="mb-0">Name</p>
+				</div>
+				<div class="col-sm-9">
+				  <p class="text-muted mb-0">{{ current_user.name }}</p>
+				</div>
+			  </div>
+			  <hr>
+			  <div class="row">
+				<div class="col-sm-3">
+				  <p class="mb-0">Gender</p>
+				</div>
+				<div class="col-sm-9">
+				  <p class="text-muted mb-0">{{ current_user.gender }}</p>
+				</div>
+			  </div>
+			  <hr>
+			  <div class="row">
+				<div class="col-sm-3">
+				  <p class="mb-0">Email</p>
+				</div>
+				<div class="col-sm-9">
+				  <p class="text-muted mb-0">{{ current_user.email }}</p>
+				</div>
+			  </div>
+			  <hr>
+			  <div class="row">
+				<div class="col-sm-3">
+				  <p class="mb-0">Contact</p>
+				</div>
+				<div class="col-sm-9">
+				  <p class="text-muted mb-0">{{ current_user.contact }}</p>
+				</div>
+			  </div>
+			  <hr>
+			</div>
+		  </div>
+		  <div class="row">
+			
+		  </div>
+		</div>
+	  </div>
+		<div class="btn-group">
+		  <div class="col">
+			<div class="update">
+				<a class="btn btn-success" href="/settings/update" role="button">Edit</a>
+			</div>
+			<div class="reset">
+				<a class="btn btn-danger" href="/settings/updatepw" role="button">Change Password</a>
+			</div>
+		  </div>
+		</div>
+		
+	</div>
+	
+  </section>
+	
+
+</div>
+
+
+{% endblock %}

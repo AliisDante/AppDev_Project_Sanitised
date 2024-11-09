@@ -1,0 +1,101 @@
+{% extends "admin_base.html" %}
+{% block title %}Odlanahor - Restock Products{% endblock %}
+{% set active_page = "inventory" %}
+{% block style %}
+{% include 'inventory/CSS/inventory.css' %}
+{% endblock %}
+{% block content %}
+<script src="{{url_for('static', filename='scripts/inventory_sort_filter-search.js')}}"></script>
+<h1 class="text-muted ms-3 mt-3 p-3">Restock Products</h1>
+<div class="px-4">
+  <div>
+    <div class="justify-content-md-end d-flex m-3">
+      <div class="dropdown">
+        <button class="manage-btn btn btn-outline-secondary btn-light dropdown-toggle me-3 color-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Manage Products
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="add">Add Products</a></li>
+          <li><a class="dropdown-item" href="restock">Restock Products</a></li>
+          <li><a class="dropdown-item" href="delete">Delete Products</a></li>
+          <li><a class="dropdown-item" href="update">Update Products</a></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <button id="sort" class="sort-btn btn btn-outline-secondary btn-light dropdown-toggle me-3 color-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Sort by: ID
+        </button>
+        <ul class="dropdown-menu">
+          <li><a onclick="sortTable(0)" class="dropdown-item">ID</a></li>
+          <li><a onclick="sortTable(1)" class="dropdown-item">Alphabetical</a></li>
+          <li> <a onclick="sortTable(2)" class="dropdown-item">Quantity</a></li>
+          <li><a onclick="sortTable(3)" class="dropdown-item">Type</a></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <button id="filter" class="filter-btn btn btn-outline-secondary btn-light dropdown-toggle me-3 color-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Filter By:
+        </button>
+        <ul class="dropdown-menu">
+          <li><a onclick="filter_Table(-1)" class="dropdown-item">Reset </a></li>
+          <li><a onclick="filter_Table(0)" class="dropdown-item">Type: Bedding </a></li>
+          <li><a onclick="filter_Table(1)" class="dropdown-item">Type: Housing </a></li>
+          <li><a onclick="filter_Table(2)" class="dropdown-item">Type: Dining </a></li>
+          <li><a onclick="filter_Table(3)" class="dropdown-item">Type: Living </a></li>
+          <li><a onclick="filter_Table(4)" class="dropdown-item">Low Quantity (0-10)</a></li>
+          <li> <a onclick="filter_Table(5)" class="dropdown-item">Moderate Quantity (11-50)</a></li>
+          <li> <a onclick="filter_Table(6)" class="dropdown-item">High Quantity (>50)</a></li>
+          <li> <a onclick="filter_Table(7)" class="dropdown-item">Waiting Restock Status</a></li>
+        </ul>
+      </div>
+      <input type="text" class="rounded-2 ps-2" id="myInput" onkeyup="myFunction(this.value)" placeholder="Search for...">
+    </div>
+  </div>
+  <table id="myTable0" class="table table-striped rounded-4 bg-white border-0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Quantity</th>
+        <th>Restock Status</th>
+        <th>Sold</th>
+        <th class="d-flex justify-content-center">Restock?</th>
+      </tr>
+    </thead>
+    <tbody id="myTable" class="product-rows">
+      {% for product in products %}
+
+      <tr class="pid-{{product.id}} row-number-{{ loop.index }} product-row">
+        <td class="product-id">{{ product.id }}</td>
+        <td class="table-col-2 product-name">{{ product.name }}</td>
+        <td>{{ product.type }}</td>
+        <td>{{ product.quantity }}</td>
+        <td class="status">{{ product.restock_status }}</td>
+        <td >{{ product.sold }}</td>
+        <td>
+          <div>
+            {% if  product.restock_status  != 'Waiting' %}
+              <a href = "{{ url_for('restock_form', id=product.id) }}" class="d-flex justify-content-center restock">
+                <svg style="color:#29D01E" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class=" bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                </svg>
+              </a>
+            {% else %}
+              <a href = "{{ url_for('restock_status_original', id=product.id) }}" class="d-flex justify-content-center restock">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+              </a>
+            {% endif %}
+            </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="justify-content-md-end d-flex">
+    <a class="back-btn btn btn-outline-secondary btn-light color-btn" href="{{url_for('view_products')}}" role="button">Back</a>
+  </div>
+</div>
+{% endblock %}

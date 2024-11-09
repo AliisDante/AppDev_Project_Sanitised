@@ -1,0 +1,16 @@
+.idea
+.vscode
+venv
+__pycache__
+instance/*.db
+flask_session
+migrations/
+.eslintrc.json
+package.json
+package-lock.json
+node_modules/
+*.swp
+private_scripts/
+google_api_credentials.json
+token.pickle
+productsDB/

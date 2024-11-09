@@ -1,0 +1,397 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+
+:root {
+    --red-1: #EE3636;
+    --green-1: #29D01E;
+    --main-gold: #D4AF37;
+    --main-blue: #2453D4;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.cont {
+    margin: 2rem
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.boxes-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.sum-box {
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    margin: .8rem;
+    max-width: 300px;
+}
+
+.sum-box svg {
+    scale: .75;
+}
+
+.left  {
+    margin-left: 0px;
+}
+
+.right {
+    margin-right: 0px;
+    margin-top: 20px;
+}
+
+.sum-num {
+    margin: 0px;
+}
+
+.sum-text {
+    color: #918C8C;
+    font-size: 20px;
+}
+
+.orders {
+    margin-top: 3rem;
+}
+
+.ord-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.create-btn {
+    background-color: #fff;
+    width: 95px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    padding: .6rem;
+    height: 35px;
+    cursor: pointer;
+}
+
+.create-btn span {
+    color: #2453D4;
+    font-weight: 700;
+    font-size: 12px;
+    margin-left: 3px;
+}
+
+/* Modal Styling */
+.modal {
+    --bs-modal-width: 75%;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+.modal-title {
+    margin: 0 auto;
+}
+
+.modal .btn {
+    border-radius: 99px;
+    border: none;
+    padding: 10px 20px;
+}
+
+.modal .btn-secondary {
+    background-color: var(--red-1);
+}
+
+.modal .btn-primary {
+    background-color: var(--green-1);
+}
+
+/* Create Form Styling */
+.add-prods {
+    cursor: pointer;
+}
+
+.add-prods button {
+   text-align: center;
+   background-color: rgba(145, 140, 140, 0.1);
+   border: 1px solid #E0E0E0;
+   border-radius: 5px;
+   color: #918C8C;
+   margin-top: -5px;
+   display: block;
+   width: 100%;
+}
+
+.remove_row {
+    border: none;
+    color: var(--red-1);
+    background-color: transparent;
+    text-align: center;
+    font-size: 20px;
+}
+
+.prods-row {
+    background-color: rgba(212, 175, 55, 0.1);
+    padding: .75rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.items-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.inputItems, #inputItems {
+    width: 70%;
+}
+
+.change-quantity {
+    width: 25%;
+    vertical-align: middle;
+    margin-top: 5px;
+}
+
+.change-quantity button {
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.change-quantity span {
+    color: #D4AF37;
+}
+
+.rmv {
+    background-color: var(--red-1);
+}
+
+.add {
+    background-color: var(--green-1);
+}
+
+.item_quan {
+    max-width: 24px;
+    border: none;
+    text-align: center;
+    background-color: transparent;
+}
+
+.itemRow {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.contact {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.inputCountryCode, #inputCountryCode {
+    width: 25%;
+}
+
+.inputNumber, #inputNumber {
+    width: 70%;
+}
+
+.inputNotes, #inputNotes {
+    padding: 10px 0px 88px 10px;
+}
+
+.item_quan {
+    color: var(--main-gold);
+}
+
+.countryLabel {
+    display: flex;
+    flex-direction: row;
+}
+
+.countryLabel button {
+    border: none;
+    background-color: transparent;
+}
+
+.country-tooltip {
+    width: 16px;
+    /* fill: var(--main-gold); */
+    vertical-align: middle;
+    margin-top: -10px;
+}
+
+form label {
+    color: var(--main-blue);
+}
+
+.invalidField {
+    border: 1px solid var(--red-1) !important;
+}
+
+/* End Form Styling */
+
+.actions ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.actions li {
+    list-style-type: none;
+}
+
+.actions svg {
+    width: 20px;
+}
+
+.view-btn svg {
+    fill: var(--main-blue);
+}
+
+.update-btn svg {
+    fill: var(--green-1);
+}
+
+.del-btn svg {
+    fill: var(--red-1);
+}
+
+.success-contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: calc(100vh - 180px);
+}
+
+.secondary {
+    color: var(--secondary);
+}
+
+.tick {
+    margin-bottom: 3rem;
+    scale: 1.75;
+}
+
+.checkmark {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px var(--green-1);
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+  
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: var(--green-1);
+    fill: none;
+    animation: stroke .6s cubic-bezier(0.650, 0.000, 0.450, 1.000) forwards;
+}
+  
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke .3s cubic-bezier(0.650, 0.000, 0.450, 1.000) .8s forwards;
+}
+  
+.deleteModal .modal-content {
+    width: 40%;
+    padding: 2rem;
+    border-radius: 20px;
+    margin: 0 auto;
+}
+
+.deleteModal h2 {
+    font-weight: 700;
+    text-align: center;
+}
+
+.deleteModal .modal-footer {
+    justify-content: space-between;
+    padding: 0rem 5rem;
+}
+
+.a-center,
+.orders-table th {
+    text-align: center;
+}
+
+.actions ul {
+    padding: 0px;
+}
+
+.orders-twrap {
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 21px;
+    padding: 1rem 2rem;
+    margin: 1rem;
+}
+
+.overdue {
+    color: var(--red-1);
+}
+
+/* table.dataTable, .orders-table tr, .orders-table td {
+    border: 1px solid var(--bs-table-accent-bg) !important;
+} */
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 5px;
+    background: #fff !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: var(--main-gold) !important;
+}
+
+.no-sort {
+    background: transparent !important;
+    cursor: default !important;
+}
+
+.disabled-btn {
+    color: #918C8C !important;
+    background-color: rgba(145, 140, 140, 0.1);
+}
+  
+@keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+}
+  
+@keyframes scale {
+    0%, 100% {
+      transform: none;
+    }
+    50% {
+      transform: scale3d(1.1, 1.1, 1);
+    }
+}
+  
+@keyframes fill {
+    100% {
+      box-shadow: inset 0px 0px 0px 30px var(--green-1);
+    }
+}

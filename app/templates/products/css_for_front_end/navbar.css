@@ -1,0 +1,20 @@
+nav {
+    background: bisque;
+    /*position: -webkit-sticky;*/
+    /*position: sticky ;*/
+    top:0;
+    width: 100%;
+    scroll-behavior: smooth;
+}
+nav li{
+    color:black;
+    font-weight: 600;
+    margin-left: 10px;
+}
+.account{
+    margin-left: 50px;
+}
+
+a img{
+    margin-right: 20px;
+}

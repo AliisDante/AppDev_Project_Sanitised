@@ -1,0 +1,325 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,200&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
+
+body {
+    /*background: rgba(30,36,42,0.97);*/
+    font-family : 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+
+}
+
+/*section{*/
+/*    min-height: 50vh;*/
+/*}*/
+
+/*The website landing page*/
+header{
+    width:100%;
+    min-height: 100vh;
+    background-image: url('/static/products/HomePage/HomeCover.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    align-items : center;
+    animation: cover 3.5s forwards;
+
+
+}
+@keyframes cover {
+         0%{
+        transform:  translateY(-5rem);
+        opacity: 10;
+    }
+}
+
+
+
+
+.home{
+    position: sticky;
+    top: 13%;
+    text-align: center;
+    /*margin-bottom:15rem;*/
+    margin-bottom:20%;
+    animation: animate 2s forwards;
+}
+
+@keyframes animate {
+    0%{
+        transform:  translateY(-10rem);
+        opacity: 0;
+    }
+}
+
+
+.home h1 {
+    font-size:5.5vmax;
+    color: rgba(61,61,61,0.77);
+    font-weight: bold;
+    text-shadow: 0 3px 5px rgba(0,0,0,0.5);
+}
+
+.home h4{
+     color: rgba(31,118,145,0.97);
+    font-weight: bold;
+}
+
+.explore-btn{
+    display: inline-block;
+    color: white;
+    padding: 0.75rem 1.8rem;
+    border-radius: 3rem ;
+    background: black;
+    box-shadow: 0 4px 10px slategray ;
+    border: none;
+    font-size: 1rem;
+    margin-top: 1rem;
+    position:relative;
+    cursor:pointer ;
+
+}
+
+/*shop now button on cover page */
+.explore-btn{
+    display: inline-block;
+    color: white;
+    padding: 0.75rem 1.8rem;
+    border-radius: 3rem ;
+    background: black;
+    box-shadow: 0 4px 10px slategray ;
+    border: none;
+    font-size: 1rem;
+    margin-top: 1rem;
+    position:relative;
+    cursor:pointer ;
+
+}
+
+.explore-btn::after{
+    content:'';
+    background: black ;
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width: 100%;
+    z-index: -1;
+    border-radius: 3rem;
+    transition: all .4s;
+}
+
+.explore-btn:hover::after{
+    transform: scale(2);
+    opacity: 0;
+}
+
+.explore-btn:hover {
+    background: grey;
+    color: white;
+}
+
+
+/*2_NewArrivals*/
+.home-shop-heading , home-categories {
+    padding-top: 20px;
+}
+.home-shop-heading span{
+    color:limegreen;
+    font-size:2.5rem;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.new-arrival-product-title{
+
+    justify-content: space-between;
+    padding:12px;
+
+}
+
+/*Style the individual product title in the new arrivals*/
+.new-arrival-product-title h3{
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 7px;
+}
+
+/*For styling of price and home button*/
+.home-shop-container span{
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px 10px 20px ;
+    margin-top:10px;
+    color: #0ba80b;
+
+}
+
+
+/*Style the colour of the star rating*/
+.bi-star-fill , .bi-star-half {
+    color: orange;
+}
+
+.inline{
+    display: inline;
+}
+.stars-inline-block{
+    display: inline-block;
+    float: right;
+    padding-right: 10px;
+}
+
+.display-block{
+    display:block;
+
+}
+
+.bi-cart2 {
+    background:#0ba80b;
+    color: white;
+    border-radius: 10px;
+    padding:5px 10px;
+}
+.home-shop-container-img img{
+    border-radius: 20px 20px 0 0 ;
+
+}
+
+.product-box{
+     box-shadow: 5px 10px 18px #888888;
+    border-radius: 0 0 20px 20px;
+}
+.new-arrival-product-title img:hover {
+    animation: zoom 1.5s ease-in-out;
+
+}
+
+@keyframes zoom {
+
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.05, 1.05);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+
+
+
+/*Section 2*/
+/*In house collection (Living, Bedding, Dining and Home Office*/
+.home-categories-heading{
+    margin-top: 100px;
+}
+.home-categories-heading span{
+    color:black;
+    font-size:2.5rem;
+    font-weight: bold;
+    text-align: center;
+
+
+}
+.categories{
+    padding:12px;
+}
+
+.shop-now-btn{
+  transition: 0.5s ease ;
+
+}
+
+.shop-now-btn:hover{
+    background: bisque;
+    color:black;
+
+}
+
+.card{
+    border-radius: 15px;
+    width: 100%;
+    height:200px;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#card1-living{
+    background-image: url("static/products/imageStorage/Categories/living.png");
+}
+#card2-bedding{
+    background-image: url("static/products/imageStorage/Categories/bedroom.png");
+}
+#card3-dining{
+    background-image: url("static/products/imageStorage/Categories/dining.png");
+}
+#card4-HomeOffice{
+    background-image: url("static/products/imageStorage/Categories/homeOffice.png");
+}
+
+.card-body{
+    opacity: 0%;
+    transform: scale(0);
+    transition: 0.8s;
+    font-size: 1.5rem;
+    color: white;
+    margin-top: 50%;
+    margin-bottom: 50%;
+
+}
+
+.card:hover{
+    box-shadow: 0 0 0 200px rgba(0,0,0,0.80) inset;
+}
+
+.card:hover .card-body{
+    opacity: 1;
+    transform:scale(1);
+}
+
+/*Section 3 About US*/
+#home-aboutUs{
+    margin-top:100px;
+}
+
+.about-heading {
+    color:#0ba80b ;
+    font-size: 1.5rem;
+}
+
+
+/*Scroll Animation*/
+.hidden{
+    opacity: 0;
+    filter:blur(5px);
+    transform: translateX(-100%);
+    transition: all 2s;
+}
+
+
+.show{
+    opacity: 1;
+    filter: blur(0);
+    transform:translateX(0);
+}
+
+
+.card:nth-child(2){
+    transition-delay: 200ms;
+}
+.card:nth-child(3){
+    transition-delay: 400ms;
+}
+.card:nth-child(4){
+    transition-delay: 600ms;
+}

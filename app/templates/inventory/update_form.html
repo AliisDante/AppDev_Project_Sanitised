@@ -1,0 +1,99 @@
+{% extends "admin_base.html" %}
+{% block title %}Odlanahor - Update{% endblock %}
+{% set active_page = "inventory" %}
+{% block style %}
+{% include 'inventory/CSS/inventory.css' %}
+{% endblock %}
+{% block content %}
+<script src="{{url_for('static', filename='scripts/inventory_sort_filter-search.js')}}"></script>
+{% from "includes/formHelper.html" import render_field %}
+    <h1 class="text-muted ms-3 mt-3 p-3">
+    Inventory Management - Update Products
+    </h1>
+    {% from "includes/formHelper.html" import render_field %}
+    <form class="bg-white border border-grey rounded-5 me-5 ms-5 p-3" id="form" method="POST" action="" enctype="multipart/form-data" onsubmit="return validateFile(1)">
+        <div class="row">
+          <div class="left-form col-7">
+            <div class="form-group p-1 ">
+              {{ render_field(form.name, class="form-control input-fill",value=product.name) }}
+            </div>
+            <div class="form-group p-1">
+                {{form.type.label}}
+                <select id = "type" name="type" class="form-select input-fill">
+                    <option value="">Select</option>
+                    <option value="H" {% if product.type =='H' %} selected {% endif %} > Home Office </option>
+                    <option value="D" {% if product.type =='D' %} selected {% endif %} > Dining </option>
+                    <option value="B" {% if product.type =='B' %} selected {% endif %} > Bedding </option>
+                    <option value="L" {% if product.type =='L' %} selected {% endif %} > Living </option>
+                </select>
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.quantity, class="form-control input-fill ",value=product.quantity) }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.price, class="form-control input-fill ",value=product.price) }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.discount, class="form-control input-fill ",value=product.discount) }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.color, class="form-control input-fill ",value=product.color) }}
+            </div>
+            <div class="form-group p-1">
+              {{form.type.label}}
+                <select id = "product_nature" name="product_nature" class="form-select input-fill">
+                    <option value="">Select</option>
+                    <option value="P" {% if product.product_nature =='P' %} selected {% endif %} > Promotional </option>
+                    <option value="N" {% if product.product_nature =='N' %} selected {% endif %} > New Arrivals </option>
+                    <option value="R" {% if product.product_nature =='R' %} selected {% endif %} > Regular Products </option>
+                </select>
+            </div>
+            <div class="form-group p-1">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control input-fill">{{ product.description }}</textarea>
+            </div>
+          </div>
+            <div class="col-5">
+                <div id="img-preview" class="pt-1">
+                    <img id="image" src="{{ url_for('static', filename='productsDB/'~ product.picture_1) }}"/>
+                </div>
+                <div class="form-group p-1 picture">
+                    <input type="file" id="picture_1" name="picture_1"  accept="image/*" value="{{ product.picture_1 }}" oninput="getImgData()" />
+                    <label class="justify-content-center" for="picture_1">Choose Image</label>
+                </div>
+                <ul class="img-errors">
+                    <li id="ImgFormatError" class="text-danger">Valid File Format is required.<br/>.JPEG, .JPG, .PNG are preferred.</li>
+                </ul>
+            </div>
+        </div>
+      <button class="d-flex justify-content-center btn btn-danger border border-0" data-bs-toggle="modal" data-bs-target="#Modal" type="button">Submit</button>
+        <!-- The Modal -->
+        <div class="modal" id="Modal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Delete Confirmation</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                      Are you sure you want to update <span>{{product.name}}</span>?
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                      <input type="submit" value="Update" class="btn btn-primary" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+    </form>
+    <div class="justify-content-md-end d-flex">
+        <a class="back-btn btn btn-outline-secondary btn-light color-btn me-5 my-3" href="{{url_for('update')}}" role="button">Back</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,289 @@
+{% extends 'products_base.html' %}
+
+{% block title %} {{ product.name }} {% endblock %}
+{% block style %}
+  {% include 'products/css_for_front_end/product_view.css' %}
+    .card-body a ,.card-body button{
+
+        margin-right:10px;
+    }
+{% endblock %}
+
+{% block content %}
+    <section class="mt-5">
+        <div class="row">
+            <div class="col-sm-12 col-md-5 text-center ">
+{#                {% if product.product_nature =='N' %}#}
+{#                    <img src='{{ url_for('static' , filename='products/imageStorage/NewArrival/'~ product.name ~'.jpg' )}}' width="90%" height="450px" />#}
+{#                {% elif product.product_nature =='P' %}#}
+{#                    <img src='{{ url_for('static' , filename='products/imageStorage/Promotional/'~ product.name ~'.jpg' )}}' width="90%" height="450px" />#}
+{#                {% elif product.product_nature == 'R' and product.type =='H' %}#}
+{#                    <img src='{{ url_for('static' , filename='products/imageStorage/Regular/homeOffice/'~ product.name ~'.jpg' )}}' width="90%" height="450px" />#}
+{#                {% elif product.product_nature == 'R' and product.type =='D' %}#}
+{#                    <img src='{{ url_for('static' , filename='products/imageStorage/Regular/Dining/'~ product.name ~'.jpg' )}}' width="90%" height="450px" />#}
+{#                {% elif product.product_nature == 'R' and product.type =='B' %}#}
+{#                    <img src='{{ url_for('static' , filename='products/imageStorage/Regular/Bedding/'~ product.name ~'.jpg' )}}' width="90%" height="450px" />#}
+{#                {% elif product.product_nature == 'R' and product.type =='L' %}#}
+{#                    <img src='{{ url_for('static' , filename='products/imageStorage/Regular/Living/'~ product.name ~'.jpg' )}}' width="90%" height="450px" />#}
+{#                {% endif %}#}
+                <img src="{{ url_for('static' , filename='productsDB/'~ product.picture_1 )}}" width="90%" height="450px" alt="image" />
+            </div>
+            <div class="col-sm-12 col-md-7 mt-5 mt-md-0">
+               <div class="box">
+                   <div class="box_content">
+                       <h1 class="pt-4">{{ product.name }}</h1>
+                       <div class="right">
+                           <i class="bi bi-heart"></i>
+                       </div>
+{#                        <div class="stars-inline-block pt-2">#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-half"></i>#}
+{#                            <a href="#review" style="color:black;"><h5 class="inline pl-2 underline"> ({{ counter}} reviews) </h5></a>#}
+{#                        </div>#}
+
+                       {% set count = namespace(value= 0) %}
+                       {% set rating_count = namespace(value=0) %}
+                       {% for review in reviews %}
+                            {% if review.product_id == product.id %}
+                                {% set count.value =  count.value + 1 %}
+                                {% set rating_count.value = rating_count.value + review.rating %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if count.value != 0  %}
+                            {% set rating_avg = rating_count.value // count.value %}
+                            <div class="stars-inline-block">
+                                {% for i in range(rating_avg) %}
+                                    <i class="bi bi-star-fill"></i>
+                                {% endfor %}
+
+                                {% set rating_avg_left = 5 - rating_avg %}
+                                {% for i in range(rating_avg_left) %}
+                                    <i class="bi bi-star"></i>
+
+                                {% endfor %}
+                            <a href="#review" style="color:black;"><h5 class="inline pl-2 underline"> ({{ counter }} reviews) </h5></a>
+
+                            </div>
+                        {% else %}
+                            <div class="stars-inline-block">
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <a href="#review" style="color:black;"><h5 class="inline pl-2 underline"> ({{ counter }} reviews) </h5></a>
+                            </div>
+                        {% endif %}
+
+                       <h4 class="pricebox mt-3">{{ "$%.2f"| format(product.price)}}</h4>
+{#                       <p class="mt-3">Available only in <strong></strong><`/p>#}
+                       {% from "includes/formHelper.html" import render_field %}
+                       <form method="post" action="{{ url_for( 'AddToCart') }}">
+                              <div class="form-group p-1">
+                                 <select name="color_option" required>
+                                 {%  set colors = product.color.split(',') %}
+                                        <option  value="">Select Colour</option>
+                                     {%  for i in colors  %}
+        {#                                 {%  set col =color.split(':') %}#}
+                                         <option  value="{{ i }}">{{  i|title }}</option>
+                                     {% endfor %}
+                                 </select>
+                              </div>
+
+                               <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                               <div class="form-group p-1">
+                                   <h5>Quantity : <input type="number" min="1", max="{{ quantity }}"  value="1" name="quantity"> </h5>
+                                    <h6 class="text-danger pt-2">Stocks Available : {{ product.quantity }} </h6>
+                              </div>
+
+                               <input type="submit" href="/" value="Add To Cart" class="addtocart_product">
+                               <input type="hidden" name="redirect-url" value="{{ redirect_url }}">
+                       </form>
+
+                        <h5><i class="bi bi-truck "></i> Free Shipping for Orders above $500.00</h5>
+
+                   </div>
+               </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="product_section2">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Product Details</h3>
+                    </div>
+                    <div class="card-body">
+                         {% set description_short = product.description.split(';') %}
+                        {% for i in description_short %}
+                        <p>{{ i }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mt-5">
+                <div class="card" id="review">
+                    <div class="card-header">
+                        <h3>Product ratings<a href="/review/{{ product.id }}" class="btn btn-dark" style="float:right;margin-right: 20px">Add A Review</a></h3>
+                    </div>
+                    <div class="card-body">
+{#                        <p>Some text goes here</p>#}
+                        {% for x in reviews %}
+                            {% if x.rating == 5 %}
+                                <div class="stars-inline-block pt-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                 </div>
+                            {% elif x.rating == 4 %}
+                                <div class="stars-inline-block pt-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                 </div>
+                            {% elif x.rating == 3 %}
+                                <div class="stars-inline-block pt-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                 </div>
+                            {% elif x.rating == 2 %}
+                                <div class="stars-inline-block pt-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                 </div>
+
+                            {% elif x.rating == 1 %}
+                                <div class="stars-inline-block pt-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                 </div>
+
+                        {% endif %}
+
+                            <h4>{{ x.title }}</h4>
+                            <p>{{ x.content }}</p>
+                            <a href="/review/{{ product.id }}/{{ x.id }}/update" class="btn btn-warning">Update</a>
+{#                            <a href="/review/{{ product.id }}/{{ x.id }}/delete" class="btn btn-danger">Delete</a>#}
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteReview-{{ x.id }}">Delete</button>
+                            <hr>
+
+                            <!-- Modal -->
+                                    <div class="modal fade" id="deleteReview-{{ x.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteReviewLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteReviewLabel">You Are About to Delete this Review</h5>
+
+                                          </div>
+                                          <div class="modal-body">
+
+                                                <h4>{{ x.title }}</h4>
+                                                <p>{{ x.content }}</p>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <a href="/review/{{ product.id }}/{{ x.id }}/delete" class="btn btn-danger">Confirm</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                        <!--End Modal -->
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{#    #}
+{#    <section class="mt-5">#}
+{#        <div class="row">#}
+{#            <div class="col-sm-12 col-md-5 ">#}
+{#                <img src='{{ url_for('static' , filename='products/HomePage/Eveer 100.jpg' )}}' width="90%"  />#}
+{#            </div>#}
+{#            <div class="col-sm-12 col-md-7 ">#}
+{#               <div class="box">#}
+{#                   <div class="box_content">#}
+{#                       <h1 class="pt-4">Sofa Set 1</h1>#}
+{#                       <div class="right">#}
+{#                           <i class="bi bi-heart"></i>#}
+{#                       </div>#}
+{#                        <div class="stars-inline-block pt-2">#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-fill"></i>#}
+{#                            <i class="bi bi-star-half"></i>#}
+{#                            <h5 class="inline pl-2 underline"> (50 reviews) </h5>#}
+{#                        </div>#}
+{#                       <h4 class="pricebox mt-3">$749.99</h4>#}
+{#                       <p class="mt-3">Available only in <strong></strong></p>#}
+{#                       {% from "includes/formHelper.html" import render_field %}#}
+{#                       <form method="post" action="">#}
+{#                          <div class="form-group p-1">#}
+{#                            {{ render_field(form.color_selection, class="form-control") }}#}
+{#                          </div>#}
+{#                          <div class="form-group p-1">#}
+{#                               <h5>Quantity : <input type="number" min="1", max="10"  value="1" > </h5>#}
+{#                          </div>#}
+{##}
+{#                           <input type="submit" href="/" value="Add To Cart" class="addtocart_product">#}
+{#                           <h6 class="text-danger mt-2">Stocks Available : </h6>#}
+{##}
+{#                       </form>#}
+{#                   </div>#}
+{#               </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+{##}
+{#    <section id="product_section2">#}
+{#        <div class="row">#}
+{#            <div class="col-sm-12">#}
+{#                <div class="card">#}
+{#                    <div class="card-header">#}
+{#                        <h3>Product Details</h3>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <p>Some text goes here</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-sm-12 mt-5">#}
+{#                <div class="card">#}
+{#                    <div class="card-header">#}
+{#                        <h3>Product ratings</h3>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <p>Some text goes here</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#        </div>#}
+{#    </section>#}
+{% endblock %}

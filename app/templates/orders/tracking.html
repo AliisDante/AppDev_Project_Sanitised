@@ -1,0 +1,110 @@
+{% extends "customer_base.html" %}
+{% block title %}Odlanahor - Track{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="../../static/styles/track.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<div class="cont">
+
+<div class="searchWrap mtn5">
+    <div class="detailsWrap">
+        <div class="card">
+            <div class="row d-flex justify-content-between px-3 top">
+                <div class="d-flex">
+                    <h5>ORDER <span class="text-main-b font-weight-bold">#{{ order.id }}</span></h5>
+                </div>
+                <div class="d-flex flex-column text-sm-right">
+                    {% if order.status != 'Delivered' %}
+                    <p class="mb-0">Expected Arrival <span>{{ deliver }}</span></p>
+                    {% else %}
+                    <p class="mb-0">Your order has been delivered!</p>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Add class 'step-active' to progress -->
+            <div class="row progressWrap">
+                <div class="col-2"></div>
+                <div id="progressBar" class="col-8"> 
+                    <div class="step step-active">
+                        <div>
+                            <div class="circle"><i class="fa fa-check"></i></div>
+                        </div>
+                        <div>
+                            <div class="title">
+                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M13.403 24h-13.403v-22h3c1.231 0 2.181-1.084 3-2h8c.821.916 1.772 2 3 2h3v9.15c-.485-.098-.987-.15-1.5-.15l-.5.016v-7.016h-4l-2 2h-3.897l-2.103-2h-4v18h9.866c.397.751.919 1.427 1.537 2zm5.097-11c3.035 0 5.5 2.464 5.5 5.5s-2.465 5.5-5.5 5.5c-3.036 0-5.5-2.464-5.5-5.5s2.464-5.5 5.5-5.5zm0 2c1.931 0 3.5 1.568 3.5 3.5s-1.569 3.5-3.5 3.5c-1.932 0-3.5-1.568-3.5-3.5s1.568-3.5 3.5-3.5zm2.5 4h-3v-3h1v2h2v1zm-15.151-4.052l-1.049-.984-.8.823 1.864 1.776 3.136-3.192-.815-.808-2.336 2.385zm6.151 1.052h-2v-1h2v1zm2-2h-4v-1h4v1zm-8.151-4.025l-1.049-.983-.8.823 1.864 1.776 3.136-3.192-.815-.808-2.336 2.384zm8.151 1.025h-4v-1h4v1zm0-2h-4v-1h4v1zm-5-6c0 .552.449 1 1 1 .553 0 1-.448 1-1s-.447-1-1-1c-.551 0-1 .448-1 1z"/></svg>
+                            </div>
+                            <div class="caption">Processed</div>
+                        </div>
+                    </div>
+                    <div class="step {{ 'step-active' if order.status != 'Pending' }}">
+                        {% if order.status != 'Pending' %}
+                        <div>
+                            <div class="circle"><i class="fa fa-check"></i></div>
+                        </div>
+                        {% else %}
+                        <div>
+                            <div class="circle">2</div>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <div class="title">
+                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M11.5 22.6l3.404-1.816c.238.26.469.519.685.768l-4.589 2.448-11-5.869v-12.131l11-6 11.001 6.066v9.612c-.329-.319-.666-.662-1-1.019v-7.516l-2.637 1.357-.018 4.588.009-.008c1.068 1.392 2.596 3.059 3.928 4.2-1.08 1.252-1.433 2.67-.67 3.24.592.443 1.518.641 2.01 1.158.252.268.377.61.377.95 0 .863-.724 1.372-1.371 1.372-.363 0-.725-.143-.994-.426-.475-.501-.633-1.39-1.012-2.004-.523-.854-2.037-.625-3.366.411-1.549-1.873-4.505-4.809-5.757-5.579v6.198zm11.443.361c-.181.172-.472.166-.644-.019-.177-.183-.166-.473.015-.645.184-.175.471-.168.645.016.175.182.168.472-.016.648zm-12.443-10.931l-9.5-4.946v10.447l9.5 5.069v-10.57zm4.463 5.862l3.315-3.158c.467.578.933 1.06 1.553 1.715.251.263.259.507.138.623-.444.422-1.478-1.072-1.951-.621-.469.447 1.212 1.67.7 2.157-.395.377-1.135-.648-1.536-.266-.187.178-.006.541.101.845.183.525-.212.878-.789.27-.573-.606-.883-.936-1.531-1.565zm.518-9.033l-9.534-4.964-4.349 2.373 9.404 4.896 4.479-2.305zm-8.476-5.541l9.565 4.98 3.832-1.972-9.405-5.185-3.992 2.177z"/></svg>
+                            </div>
+                            <div class="caption">Produced</div>
+                        </div>
+                    </div>
+                    <div class="step {{ 'step-active' if order.status != 'Pending' and order.status != 'Production' }}">
+                        {% if order.status != 'Pending' and order.status != 'Production' %}
+                        <div>
+                            <div class="circle"><i class="fa fa-check"></i></div>
+                        </div>
+                        {% else %}
+                        <div>
+                            <div class="circle">3</div>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <div class="title">
+                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M5 11v1h8v-7h-10v-1c0-.552.448-1 1-1h10c.552 0 1 .448 1 1v2h4.667c1.117 0 1.6.576 1.936 1.107.594.94 1.536 2.432 2.109 3.378.188.312.288.67.288 1.035v4.48c0 1.089-.743 2-2 2h-1c0 1.656-1.344 3-3 3s-3-1.344-3-3h-4c0 1.656-1.344 3-3 3s-3-1.344-3-3h-1c-.552 0-1-.448-1-1v-6h-2v-2h7v2h-3zm3 5.8c.662 0 1.2.538 1.2 1.2 0 .662-.538 1.2-1.2 1.2-.662 0-1.2-.538-1.2-1.2 0-.662.538-1.2 1.2-1.2zm10 0c.662 0 1.2.538 1.2 1.2 0 .662-.538 1.2-1.2 1.2-.662 0-1.2-.538-1.2-1.2 0-.662.538-1.2 1.2-1.2zm-3-2.8h-10v2h.765c.549-.614 1.347-1 2.235-1 .888 0 1.686.386 2.235 1h5.53c.549-.614 1.347-1 2.235-1 .888 0 1.686.386 2.235 1h1.765v-4.575l-1.711-2.929c-.179-.307-.508-.496-.863-.496h-4.426v6zm1-5v3h5l-1.427-2.496c-.178-.312-.509-.504-.868-.504h-2.705zm-16-3h8v2h-8v-2z"/></svg>
+                            </div>
+                            <div class="caption">Shipped</div>
+                        </div>
+                    </div>
+                    <div class="step {{ 'step-active' if order.status == 'Delivered' }}">
+                        {% if order.status == 'Delivered' %}
+                        <div>
+                            <div class="circle"><i class="fa fa-check"></i></div>
+                        </div>
+                        {% else %}
+                        <div>
+                            <div class="circle">4</div>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <div class="title">
+                                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"/></svg>
+                            </div>
+                            <div class="caption">Arrived</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+    </div>
+    <form method="POST">
+    <div class="form-floating searchInput">
+        <input class="form-control" id="floatingID" placeholder="Tracking ID" name="trackID" value="{{ order.trackingID }}">
+        <label for="floatingID">Tracking ID</label>
+        <button type="submit" class="searchIcon">
+            <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="m15.97 17.031c-1.479 1.238-3.384 1.985-5.461 1.985-4.697 0-8.509-3.812-8.509-8.508s3.812-8.508 8.509-8.508c4.695 0 8.508 3.812 8.508 8.508 0 2.078-.747 3.984-1.985 5.461l4.749 4.75c.146.146.219.338.219.531 0 .587-.537.75-.75.75-.192 0-.384-.073-.531-.22zm-5.461-13.53c-3.868 0-7.007 3.14-7.007 7.007s3.139 7.007 7.007 7.007c3.866 0 7.007-3.14 7.007-7.007s-3.141-7.007-7.007-7.007z" fill-rule="nonzero"/>
+            </svg>
+        </button>
+    </div>
+    </form>
+</div>
+
+</div>
+{% endblock %}

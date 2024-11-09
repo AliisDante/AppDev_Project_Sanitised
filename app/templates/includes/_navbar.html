@@ -1,0 +1,131 @@
+
+<style>
+nav {
+  background-color: #fbfbfb;
+}
+
+nav img {
+  height: 40px;
+  width: 40px;
+}
+
+.navbar-brand img {
+  height: 50px;
+  width: 50px;
+}
+
+.active {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+}
+
+input.search::placeholder {
+  font-style: italic;
+}
+
+
+form.search {
+  border: 2px solid grey;
+  padding: 5px 15px 5px 10px;
+  background-color: white;
+}
+
+input.search {
+  border: none;
+  background-color: transparent;
+  flex-grow: 1;
+}
+
+input.search:focus {
+  outline: none;
+}
+
+form.search img {
+  width: 30px;
+  height: 30px;
+}
+
+.cart {
+  position: relative;
+}
+
+.cart::after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border-radius: 9999px;
+  background-color: black;
+  display: block;
+  position: absolute;
+  right: 8px;
+  top: 11px;
+}
+
+.item-count {
+  z-index: 9999;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  position: absolute;
+  right: 9.5px;
+  top: 11px;
+  width: 12px;
+  height: 12px;
+  text-align: center;
+}
+
+#mobile-navbar-content {
+  border-top: 3px solid black;
+}
+
+@media (min-width: 992px) {
+  #mobile-navbar-content {
+    border-top: none;
+  }
+
+}
+
+</style>
+
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid px-3 pt-2 pb-3 py-lg-1">
+    <a class="navbar-brand" href="/">
+      <img src="{{ url_for("static", filename="Odlanahor_Logo_Red.svg") }}" alt="Odlanahor Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobile-navbar-content" aria-controls="mobile-navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between mt-3 mt-lg-0" id="mobile-navbar-content">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link fw-bold fs-5 active" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold fs-5" href="/newarrivals">New Arrival</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold fs-5" href="/collections">Collections</a>
+        </li>
+      </ul>
+      <div class="desktop-navbar-right d-lg-flex">
+        <button class="btn order-lg-1 ps-0 ps-lg-4 border-0">
+            {% if current_user.is_authenticated %}
+             <a href="{{ url_for('dash') }}"><img src="{{ url_for("static", filename="Profile_Icon.svg") }}" alt="Profile Icon"></a>
+            {% else %}
+                 <a href="{{ url_for('login_') }}"><img src="{{ url_for("static", filename="Profile_Icon.svg") }}" alt="Profile Icon"></a>
+            {% endif %}
+        </button>
+        <button class="btn cart order-lg-1 border-0">
+            <a href="/cart"><img src="{{ url_for("static", filename="Cart_Icon.svg") }}" alt="Cart Icon"></a>
+          <p class="item-count">{{ session['ShoppingCart'] |length }}</p>
+        </button>
+        <form class="search mt-3 my-lg-1 d-flex align-items-center justify-content-between rounded-4" role="search">
+          <input class="search" type="search" placeholder="Search term here..." aria-label="Search">
+          <img src="{{ url_for("static", filename="Search_Icon.svg") }}" alt="Search Icon">
+
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>

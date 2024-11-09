@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+
+:root {
+    --red-1: #EE3636;
+    --green-1: #29D01E;
+    --main-gold: #D4AF37;
+    --main-blue: #2453D4;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.cont {
+    margin: 2rem
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.boxes-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.sum-box {
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    margin: .8rem;
+    max-width: 310px;
+}
+
+.sum-box svg {
+    scale: .75;
+}
+
+.left  {
+    margin-left: 0px;
+}
+
+.right {
+    margin-right: 0px;
+    margin-top: 20px;
+}
+
+.sum-num {
+    margin: 0px;
+    font-size: 30px;
+}
+
+.sum-text {
+    color: #918C8C;
+    font-size: 20px;
+}
+
+.row2wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.graphWrap, .ringWrap {
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 1rem;
+    margin: 0.8rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.graphWrap {
+    max-width: 645.6px;
+    margin-left: -12.8px;
+}
+
+.ringWrap {
+    max-width: 310px;
+}
+
+h4 {
+    font-weight: 700;
+}

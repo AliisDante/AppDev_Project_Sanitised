@@ -1,0 +1,87 @@
+p a , p span{
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+    color:limegreen;
+}
+.disabled{
+    color: #555555;
+
+}
+
+.titleDescription{
+    color: #555555;
+}
+
+.card-body .price_discount{
+    margin-top: 10px;
+    font-weight: bold;
+    font-style: italic;
+    display: block;
+    font-size: 22px;
+}
+.card-body .sold{
+    bottom:0px;
+    font-size: 15px;
+    color: #555555;
+    float: right;
+}
+.card img{
+    margin:20px auto 0 ;
+}
+
+
+.addtocart_btn{
+    margin-top: 10px;
+    width: 100%;
+}
+
+
+.search_form {
+  color: #555;
+  display: flex;
+  border-radius: 5px;
+  float: right;
+}
+form i{
+    top:50%;
+    bottom:50%;
+    font-size: 1.3rem;
+}
+
+
+.filters select {
+    width:10%;
+    display: inline-block;
+    margin-left: 10px;
+}
+.filters label{
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 110%;
+    text-decoration: underline
+}
+
+
+.filters{
+    margin-top: 50px;
+
+}
+
+.product_card{
+    margin-bottom: 100px;
+}
+
+/*Review Stars*/
+.stars-inline-block{
+    display: inline-block;
+    font-size:110%;
+    padding-right: 10px;
+}
+.bi-star-fill , .bi-star-half {
+    color: orange;
+}
+.inline{
+    display: inline;
+}
+

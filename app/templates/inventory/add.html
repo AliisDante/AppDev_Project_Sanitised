@@ -1,0 +1,62 @@
+{% extends "admin_base.html" %}
+{% block title %}Odlanahor - Add New Products{% endblock %}
+{% set active_page = "inventory" %}
+{% block style %}
+{% include 'inventory/CSS/inventory.css' %}
+{% endblock %}
+{% block content %}
+<script src="{{url_for('static', filename='scripts/inventory_sort_filter-search.js')}}"></script>
+{% from "includes/formHelper.html" import render_field %}
+    <h1 class="text-muted ms-3 mt-3 p-3">
+    Inventory Management - Add New Products
+    </h1>
+    {% from "includes/formHelper.html" import render_field %}
+    <form class="bg-white border border-grey rounded-5 me-5 ms-5 p-3" id="form" method="POST" action="" enctype="multipart/form-data" onsubmit="return validateFile(0)">
+        <div class="row">
+          <div class="left-form col-7">
+            <div class="form-group p-1 ">
+              {{ render_field(form.name, class="form-control input-fill ") }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.type, class="form-select input-fill ") }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.quantity, class="form-control input-fill ") }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.price, class="form-control input-fill ") }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.discount, class="form-control input-fill ") }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.color, class="form-control input-fill ") }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.product_nature, class="form-select input-fill ") }}
+            </div>
+            <div class="form-group p-1">
+              {{ render_field(form.description, class="form-control input-fill", style="list-style-type:none input-fill ") }}
+            </div>
+          </div>
+            <div class="col-5">
+                <div id="img-preview" class="pt-1">
+                    <img id="image" src="{{ url_for('static', filename='images/blank_img.png') }}"/>
+                </div>
+                <div class="form-group p-1 picture">
+                    <input type="file" id="picture_1" name="picture_1"  accept="image/*" oninput="getImgData()"/>
+                    <label class="justify-content-center" for="picture_1">Choose Image</label>
+                    </div>
+                <ul class="img-errors">
+                    <li id="ImgFormatError" class="text-danger">Valid File Format is required.<br/>.JPEG, .JPG, .PNG are preferred.</li>
+                    <li id="ImgPresenceError" class="text-danger">Input is Required</li>
+                </ul>
+            </div>
+        </div>
+        <input type="reset" value="Reset" class="btn btn-danger  mt-2 p-1" onclick="resetImgData()"/>
+      <input type="submit" id="submit" value="Submit" class="btn btn-primary mt-2 p-1"/>
+    </form>
+    <div class="justify-content-md-end d-flex">
+        <button class="back-btn btn btn-outline-secondary btn-light color-btn me-5 my-3" onclick="history.back()" role="button">Back</button>
+    </div>
+{% endblock %}

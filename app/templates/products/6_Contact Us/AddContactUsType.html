@@ -1,0 +1,63 @@
+{% extends 'admin_base.html' %}
+
+{% block title %} Contact US - Add New Type {% endblock %}
+{% set active_page = "contactUs_tickets" %}
+{% block style %}
+
+    table, th, td {
+      border: 1px solid black;
+
+    }
+
+    td{
+        padding:20px 10px;
+    }
+
+    th{
+        text-align:center;
+         padding: 12px 0 ;
+    }
+
+
+
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+        <div>
+            <h1 class="text-center mt-5 mb-4">Add Contact Us Type</h1>
+            {% from 'includes/formHelper.html' import render_field %}
+            <form action="" method="post">
+{#               <input type="text" name="brand" class="form-control">#}
+                {{ render_field(form.enquiry_type_add, class="form-control" ,placeholder='Add a New Type' ) }}
+               <input type="submit" value="Add" class="btn btn-info mt-3 px-4 py-2">
+            </form>
+
+                <h4 class="text-center mt-5">Previously added Types</h4>
+                <table style="width:100%" class="mt-2 mb-5">
+                    <tr>
+                        <th>Contact Us Type</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for type in contactUsType %}
+                    <tr>
+
+                        <td>{{ type.type}}</td>
+                        <td class="text-center"><a class="btn btn-warning" href="/contactUs/type/{{ type.id }}/Delete">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+
+           </form>
+        </div>
+
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+{% endblock %}

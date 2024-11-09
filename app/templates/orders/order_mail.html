@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins">
+  </head>
+  <body>
+    <header>
+      <a href="http://odlanahor.store">
+        <img src="http://odlanahor.store/favicon.ico" alt="">
+      </a>
+    </header>
+    <h3>{{ heading }}</h3>
+    <p>Track your order <a href="http://127.0.0.1:5000/track">here</a> with the following tracking ID: {{ order.trackingID }}</p>
+    <div class="content" style="padding: 1.5rem; border: 1px solid;">
+    <div class="row heading">
+        <h1 class="col-md-6">Order <span class="blue-t" style="color: #2453D4">#{{ order.trackingID }}</span></h1>
+    </div>
+    
+    <div class="row">
+        <div class="items-wrap wrap col-md-11"
+            style="
+            background-color: #fff; border: 1px solid #fff;
+            border-radius: 21px; padding: 0.5rem 1rem; 
+            margin: 1rem;
+            "
+        >
+            <table class="items-table table">
+                <thead>
+                    <tr>
+                        <th style="text-align: left; font-size: 16px;">Items Ordered</th>
+                        <th style="text-align: left; font-size: 16px;">QTY</th>
+                        <th style="text-align: left; font-size: 16px;">Price</th>
+                        <th style="text-align: left; font-size: 16px;">Total Price</th>
+                        <th style="text-align: left; font-size: 16px;">Requests</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items %}
+                    <tr>
+                        <td>{{ name_mapping[item.item] }}</td>
+                        <td style="text-align: center;">{{ item.quantity }}</td>
+                        <td style="text-align: center;">${{ "%.2f"|format(prices[item.item]) }}</td>
+                        <td style="text-align: center;">${{ "%.2f"|format(prices[item.item] * item.quantity) }}</td>
+                        {% if item.requests == "" %}
+                        <td> N/A </td>
+                        {% else %}
+                        <td>{{ item.requests }}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="order-details-wrap wrap col-md-7"
+            style="
+            background-color: #fff; border: 1px solid #fff;
+            border-radius: 21px; padding: 0.5rem 1rem; 
+            margin: 1rem;
+            "
+        >
+            <table class="order-details-table table">
+                <thead>
+                    <tr>
+                        <th style="font-size: 20px;">Order Details</th>
+                        <th style="font-size: 20px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Customer Name</td>
+                        <td class="a-right" style="text-align: right;">{{ order.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Contact Number</td>
+                        <td class="a-right" style="text-align: right;">{{ order.contactCode }} {{ order.contactNum }}</td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td class="a-right" style="text-align: right;">{{ order.address }}</td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td class="a-right" style="text-align: right;">{{ order.country }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tracking ID</td>
+                        <td class="a-right" style="text-align: right;">{{ order.trackingID }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="order-summary-wrap wrap col-md-4"
+            style="
+            background-color: #fff; border: 1px solid #fff;
+            border-radius: 21px; padding: 0.5rem 1rem; 
+            margin: 1rem;
+            "
+        >
+            <table class="order-summary-table table table-borderless">
+                <thead>
+                    <tr class="row-line"
+                        style="padding: 0.5rem 0.5rem; background-color: transparent;
+                        border-bottom-width: 1px; box-shadow: inset 0 0 0 9999px transparent;
+                        "
+                    >
+                        <th colspan="2" style="text-align: left; font-size: 20px;">Order Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row-line">
+                        <td>Order Created</td>
+                        <td class="a-right" style="text-align: right;">{{ order_created }}</td>
+                    </tr>
+                    <tr class="row-line">
+                        <td>Subtotal</td>
+                        <td class="a-right" style="text-align: right;">${{ "%.2f"|format(subtotal) }}</td>
+                    </tr>
+                    <tr class="row-line">
+                        <td>Shipping Fee</td>
+                        {% if shipping == 0 %}
+                        <td class="a-right" style="text-align: right;"> Free </td>
+                        {% else %}
+                        <td class="a-right" style="text-align: right;">${{ "%.2f"|format(order.shipping_fee) }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr class="row-line">
+                        <td>Order Discount</td>
+                        {% if order.discount_amount == 0 %}
+                        <td class="a-right" style="text-align: right;"> N/A </td>
+                        {% else %}
+                        <td class="a-right" style="text-align: right;">-${{ "%.2f"|format(order.discount_amount) }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                    <tr class="row-line"><td></td></tr>
+                    <tr>
+                        <td>Total</td>
+                        <td class="a-right total_amt" style="text-align: right; font-weight: 700;">${{ "%.2f"|format((subtotal + order.shipping_fee) - order.discount_amount) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+  </body>
+</html>

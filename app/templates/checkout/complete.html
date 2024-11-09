@@ -1,0 +1,11 @@
+{% extends "customer_base.html" %}
+
+{% block content %}
+<div class="content text-center">
+  <h2 class="fw-bold">Checkout Complete</h2>
+  <h3 class="fw-bold">Track your order here:</h3>
+  <a href="/track" class="fw-bold d-block">http&#58//{{ hostname }}/track</a>
+  <span class="fw-bold mb-5 d-block">Tracking ID: {{ tracking_id }}</span>
+  <h2 class="fw-bold">Back to <a href="/">Homepage</a></h2>
+</div>
+{% endblock %}

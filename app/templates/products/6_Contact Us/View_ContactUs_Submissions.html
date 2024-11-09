@@ -1,0 +1,121 @@
+{% extends 'admin_base.html' %}
+{% block head %}<script async src="{{url_for('static', filename='scripts/inventory_sort_filter-search.js')}}"></script>{% endblock %}
+{% block title %} ContactUs Submissions {% endblock %}
+{% set active_page = "contactUs_tickets" %}
+{% block style %}
+
+    table, th, td {
+      border: 1px solid black;
+
+    }
+
+    td{
+        padding:20px 10px;
+    }
+
+    th{
+        text-align:center;
+         padding: 12px 0 ;
+    }
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+    <h1 class="text-center mt-5">View Open Contact Us Ticket</h1>
+  <div class="row">
+    <div class="col-1"></div>
+
+    <div class="col-10" >
+
+        <div class="row">
+            <div class="col-md-8 col-12">
+                 <div class="dropdown">
+                    <button id="sort" class="btn btn-outline-secondary btn-light dropdown-toggle me-3 back-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Sort by:
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a onclick="sortTable(0)" class="dropdown-item">ID</a></li>
+                      <li><a onclick="sortTable(1)" class="dropdown-item">Name</a></li>
+                      <li> <a onclick="sortTable(4)" class="dropdown-item">Date Submitted</a></li>
+                      <li> <a onclick="sortTable(6)" class="dropdown-item">Status: OPEN</a></li>
+
+                    </ul>
+                  </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <input type="text" class=" form-control" id="myInput" onkeyup="searchTable(this.value)" placeholder="Search for..." width="20px">
+            </div>
+        </div>
+
+       <table id="myTable0" class="table table-striped rounded-4 bg-white mt-4 ">
+            <thead>
+              <tr >
+                <th>Ref No</th>
+                <th class="table-col-2">Name</th>
+                <th>Subject</th>
+                <th>Email</th>
+
+                <th>Date Submitted</th>
+                <th>Send Message</th>
+                <th>Status</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+{#            <tbody id="myTable" class="product-rows">#}
+              {% for ticket in tickets %}
+              <tr class="pid-{{ticket.ticket_number}} row-number-{{ loop.index }} product-row">
+                <td class="product-id col-2 text-center">{{ ticket.ticket_number }}</td>
+                <td class="product-name col-2 text-center">{{ ticket.name }}</td>
+                <td class="col-3">{{ ticket.subject }}</td>
+                <td class="col-2 text-wrap text-center">{{ ticket.email }}</td>
+                <td class="col-1 text-center">{{ ticket.date }}</td>
+              {% if ticket.status == 'CLOSED' %}
+                <td class="text-center col-1"><a href="/contactUs/ticket/{{ ticket.ticket_number}}/reply" class="btn btn-dark">View</a></td>
+               {% else %}
+                <td class="text-center col-1"><a href="/contactUs/ticket/{{ ticket.ticket_number}}/reply" class="btn btn-warning">Reply</a></td>
+                {% endif %}
+                  <td class="text-center col-1">{{ ticket.status }}</td>
+                {% if ticket.status == "CLOSED" %}
+                  <!--<td class="text-center col-1"><a href="/contactUs/ticket/{{ ticket.ticket_number}}/Replied" class="btn btn-info">Replied</a></td>-->
+                    <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#delete-{{ ticket.ticket_number }}">Replied</button></td>
+                {% else %}
+                    <td class="text-center col-1"></td>
+                 {% endif %}
+              </tr>
+
+                  <!-- Modal -->
+                                    <div class="modal fade" id="delete-{{ ticket.ticket_number }}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteLabel">You Are About to Delete this Review</h5>
+
+                                          </div>
+                                          <div class="modal-body">
+
+                                                <h4 style="font-weight: bold;">Ticket Number: {{ ticket.ticket_number}}</h4>
+                                                <p>Ticket Subject: {{ ticket.subject }}</p>
+                                                <p>Ticket Email: {{ ticket.email }}</p>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <a href="/contactUs/ticket/{{ ticket.ticket_number}}/Replied" class="btn btn-danger">Confirm</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                        <!--End Modal -->
+              {% endfor %}
+{#            </tbody>#}
+      </table>
+
+    </div>
+
+    <div class="col-1"></div>
+
+  </div>
+{% endblock %}

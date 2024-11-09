@@ -1,0 +1,142 @@
+{% extends 'products_base.html' %}
+
+{% block title %}ODLANAHOR - Contact Us {% endblock %}
+
+
+{% block style %}
+{#  {% include 'products/css_for_front_end/new_arrival.css' %}#}
+    .loading{
+
+        margin-left:45px;
+
+    }
+
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div>
+            <h2 class="text-center">Contact Us</h2>
+            {% from "includes/formHelper.html" import render_field %}
+            <form method="POST" action="" id="contact_us_form">
+
+                  <div class="form-group mt-3">
+                    {{ render_field(form.name, class="form-control", id='name' , onkeyup='submit_button()') }}
+
+                  </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group mt-3">
+                            {{ render_field(form.email, class="form-control" , id='email', onkeyup='submit_button()') }}
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group mt-3">
+                            {{ render_field(form.phone_number, class="form-control" , id='phone' , onkeyup='submit_button()')  }}
+
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group mt-3">
+                            <label for="type" class="mb-1">Type</label>
+                            <select name="type" id="type" class="form-control" onchange='submit_button()' required>
+                                <option value="" >Select a Type</option>
+                                {% for type in contact_us_type %}
+                                    <option value="{{ type.type }}" >{{ type.type }}</option>
+                                {% endfor %}
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group mt-3">
+                            {{ render_field(form.subject, class="form-control" , id='subject' , onkeyup='submit_button()') }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+                    <div class="form-group mt-3">
+                         {{ render_field(form.message , class="form-control"  , rows='10' , id='message' , onkeyup='submit_button()') }}
+
+                    </div>
+{#                        {{ form.submit , class="btn btn-success mt-3 px-5 " }}#}
+{#                        {{ render_field(form.submit , class="form-control btn btn-success mt-3 px-5 "  ) }}#}
+
+                    <div class="row">
+                        <div class="col-1">
+                             <input type="submit" value="Send" class="btn btn-success mt-3 px-5  " id="submit_contact_us" onclick="submit_button_clicked()" style="border-radius:20px; ">
+                        </div>
+                        <div class="col-1">
+                             <div class="spinner-border mt-3 loading " role="status" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+            </form>
+        </div>
+    </section>
+
+    <section>
+    <h2 class="text-center mt-5 mb-3">Locate Us</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1994.3615564171848!2d103.8541631!3d1.3425152!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da176da1235b95%3A0xe92def8f0bfe6448!2s217%20Lor%208%20Toa%20Payoh%2C%20Block%20217%2C%20Singapore%20310217!5e0!3m2!1sen!2ssg!4v1675931018000!5m2!1sen!2ssg" width="100%" height="300px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <script>
+        const submit_btn = document.getElementById('submit_contact_us')
+        var name1 = document.getElementById('name')
+        var email = document.getElementById('email')
+        var phone = document.getElementById('phone')
+        let type = document.getElementById('type')
+        var subject = document.getElementById('subject')
+        var message = document.getElementById('message')
+        var loading_btn = document.querySelector('.spinner-border')
+        let form = document.getElementById('contact_us_form')
+        let type_valid
+
+       function submit_button(){
+            console.log(type.value);
+            submit_btn.disabled = true;
+            loading_btn.style.display = 'none';
+
+            if(name1.value.length > 0 || email.value.length > 0 || phone.value.length > 0  || subject.value.length > 0 || message.value.length > 0 || type.value.length > 0){
+                console.log(message.value.length);
+                submit_btn.disabled = false;
+            }
+       }
+
+       function submit_button_clicked(){
+
+           let email_check = email.value;
+           if(email_check.includes('@')){
+               email = email;
+           }
+           else{
+               email = '';
+               alert('Please Enter a Valid email');
+           }
+           if (type.value == '' || type.value == null){
+               alert('Please Select a Type from the Dropdown box')
+                type_valid = false;
+           }
+           else{
+               type_valid = true;
+           }
+
+
+            if(name1.value.length > 0 && email.value.length > 0   && subject.value.length > 0 && message.value.length > 0  && type_valid) {
+                loading_btn.style.display = 'block';
+                submit_btn.disabled = true;
+                form.submit();
+            }
+       }
+        Window.onload = submit_button();
+    </script>
+{% endblock %}

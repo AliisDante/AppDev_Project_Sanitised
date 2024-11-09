@@ -1,0 +1,206 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+
+:root {
+    --red-1: #EE3636;
+    --green-1: #29D01E;
+    --main-gold: #D4AF37;
+    --main-blue: #2453D4;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.cont {
+    margin: 2rem
+}
+
+.searchWrap {
+    margin: 1rem auto 0 auto;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.mt8 {
+    margin-top: 7rem;
+}
+.mtn5 {
+    margin-top: -5rem;
+}
+
+.searchImg {
+    max-width: 300px;
+    max-height: 250px;
+    align-self: center;
+    margin-bottom: 1rem;
+}
+
+.deatilsWrap {
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.searchInput {
+    display: flex;
+    flex-direction: row;
+}
+
+.searchIcon {
+    width: 40px;
+    vertical-align: middle;
+    margin-left: 20px;
+    border: none;
+    background: transparent;
+}
+
+/* Details */
+.card {
+    z-index: 0;
+    background-color: #fff;
+    padding-bottom: 20px;
+    margin-top: 90px;
+    margin-bottom: 45px;
+    border-radius: 10px;
+}
+
+.top {
+    padding-top: 40px;
+    padding-left: 13% !important;
+    padding-right: 13% !important;
+}
+
+.text-main-b {
+    color: var(--main-blue);
+}
+
+.legendWrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+}
+
+.legend svg {
+    align-self: center;
+    margin-bottom: .5rem;
+    fill: var(--main-blue);
+}
+
+.legend1 {
+    margin: 0 3rem 1rem 2rem;
+}
+
+.legend2 {
+    margin: 0 3rem 1rem 1.5rem;
+}
+
+.legend3 {
+    margin: 0 3rem 1rem 1.75rem;
+}
+
+.legend4 {
+    margin: 0 2rem 1rem 2.5rem;
+}
+
+/* Errors */
+.error {
+  border: 1px solid var(--red-1);  
+}
+
+.errorMsg {
+    color: var(--red-1);
+}
+
+.errorImg {
+    max-width: 300px;
+    align-self: center;
+    margin-bottom: 1rem;
+    max-height: 250px;
+}
+
+/* Progress Bar */
+.progressWrap {
+    margin-top: 3rem;
+}
+
+#progressBar {
+    margin: 0 auto;
+    margin-left: -1rem;
+}
+
+.step {
+    position: relative;
+    min-height: 1em;
+    color: gray;
+}
+
+.title {
+    line-height: 1.5em;
+    font-weight: bold;
+}
+
+.caption {
+    font-size: 0.8em;
+}
+
+.step + .step {
+    margin-top: 1.5em
+}
+
+.step > div:first-child {
+    position: static;
+    height: 0;
+}
+
+.step > div:not(:first-child) {
+    margin-left: 1.5em;
+    padding-left: 1em;
+}
+
+/* Circle */
+.circle {
+    background: gray;
+    position: relative;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 0 3px #fff;
+}
+
+/* Vertical Line */
+.circle:after {
+    content: ' ';
+    position: absolute;
+    display: block;
+    top: 1px;
+    right: 50%;
+    bottom: 1px;
+    left: 50%;
+    height: 100%;
+    width: 1px;
+    transform: scale(1, 2);
+    transform-origin: 50% -100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: -1;
+}
+
+.step:last-child .circle:after {
+    display: none
+}
+
+.step.step-active {
+    color: var(--main-blue)
+}
+.step.step-active .circle {
+    background-color: var(--main-blue);
+}

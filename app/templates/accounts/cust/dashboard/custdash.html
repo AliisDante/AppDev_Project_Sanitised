@@ -1,0 +1,104 @@
+{% extends "custdash_base.html" %}
+{% set active_page = "dashboard" %}
+{% block head %}
+<link rel="stylesheet" href="../../../static/styles/accounts.css">
+{% endblock %}
+{% block content %} 
+<style>
+table td{
+    background-color: white;
+    border-radius: 20px;
+    margin: 15px;
+    padding: 20px;
+    width: 31%;
+    display: inline-block;
+    height: 250px;
+    text-align: center;
+}
+span{
+    display: inline-block;
+}
+.card{
+    float: left;
+    margin: 20px;
+    padding-top: 15px;
+}
+</style>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class='flashes'>
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} " id='alert'>
+<span>{{ message }}</span>
+<button type="button" style='float:right;'class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+
+</div>
+
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+<h1>Dashboard</h1>
+<h2>Welcome {{ current_user.name }}!</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+        <div class="card" style="width: 18rem; border: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="184.657" height="184.657" viewBox="0 0 184.657 184.657" style="margin: 0px auto;">
+            <g id="Group_107" data-name="Group 107" transform="translate(-311.172 -272.171)">
+              <g id="Group_106" data-name="Group 106">
+                <path id="Path_2201" data-name="Path 2201" d="M92.329,0A92.329,92.329,0,1,1,0,92.329,92.455,92.455,0,0,1,92.329,0Z" transform="translate(311.172 272.171)" fill="rgba(40,160,222,0.2)"/>
+              </g>
+              <g id="Group_105" data-name="Group 105">
+                <path id="Icon_awesome-money-check-alt" data-name="Icon awesome-money-check-alt" d="M130.6,2.25H6.874A6.968,6.968,0,0,0,0,9.306V93.982a6.968,6.968,0,0,0,6.874,7.056H130.6a6.968,6.968,0,0,0,6.874-7.056V9.306A6.968,6.968,0,0,0,130.6,2.25Zm-92.8,65.245v3.555a1.741,1.741,0,0,1-1.718,1.764H32.651a1.741,1.741,0,0,1-1.718-1.764V67.457a12.1,12.1,0,0,1-6.739-2.5,1.8,1.8,0,0,1-.122-2.677L26.6,59.805a1.728,1.728,0,0,1,2.176-.161,5.074,5.074,0,0,0,2.754.82h6.038A2.746,2.746,0,0,0,40.1,57.556a2.876,2.876,0,0,0-1.884-2.807l-9.666-2.977A9.956,9.956,0,0,1,21.764,42.2a9.711,9.711,0,0,1,9.166-9.938V28.711a1.741,1.741,0,0,1,1.718-1.764h3.437A1.741,1.741,0,0,1,37.8,28.711V32.3a12.088,12.088,0,0,1,6.739,2.5,1.8,1.8,0,0,1,.122,2.677l-2.524,2.472a1.728,1.728,0,0,1-2.176.161,5.056,5.056,0,0,0-2.754-.82H31.173A2.746,2.746,0,0,0,28.638,42.2a2.876,2.876,0,0,0,1.884,2.807l9.666,2.977a9.956,9.956,0,0,1,6.784,9.568A9.709,9.709,0,0,1,37.806,67.495Zm51.554-3.5a1.741,1.741,0,0,1-1.718,1.764H63.584a1.741,1.741,0,0,1-1.718-1.764V60.465A1.741,1.741,0,0,1,63.584,58.7H87.642a1.741,1.741,0,0,1,1.718,1.764Zm34.369,0a1.741,1.741,0,0,1-1.718,1.764H104.827a1.741,1.741,0,0,1-1.718-1.764V60.465a1.741,1.741,0,0,1,1.718-1.764h17.185a1.741,1.741,0,0,1,1.718,1.764Zm0-21.169a1.741,1.741,0,0,1-1.718,1.764H63.584a1.741,1.741,0,0,1-1.718-1.764V39.3a1.741,1.741,0,0,1,1.718-1.764h58.428A1.741,1.741,0,0,1,123.73,39.3Z" transform="translate(334.762 312.856)" fill="#28a0de"/>
+              </g>
+            </g>
+          </svg>
+          
+          
+            <div class="card-body">
+              <h5 class="card-title"><span class="fs-1">{{ count }}</span> Purchases Made</h5>
+              <br>
+              <p class="card-text">Your orders with us! Thank you for your support!</p>
+            </div>
+          </div>
+    </div>
+    <div class="col-sm">
+      <div class="card" style="width: 18rem; border: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="184.657" height="184.657" viewBox="0 0 184.657 184.657" style="margin: 0px auto;">
+            <g id="Group_113" data-name="Group 113" transform="translate(-900.843 -249.671)">
+              <path id="Path_2201" data-name="Path 2201" d="M92.329,0A92.329,92.329,0,1,1,0,92.329,92.455,92.455,0,0,1,92.329,0Z" transform="translate(900.843 249.671)" fill="rgba(252,148,69,0.2)"/>
+              <path id="Icon_awesome-shuttle-van" data-name="Icon awesome-shuttle-van" d="M136.717,41.088,107.479,6A10.437,10.437,0,0,0,99.464,2.25H6.957A6.958,6.958,0,0,0,0,9.207V71.817a6.958,6.958,0,0,0,6.957,6.957h6.957a20.87,20.87,0,1,0,41.74,0H83.481a20.87,20.87,0,1,0,41.74,0h6.957a6.958,6.958,0,0,0,6.957-6.957V47.769A10.446,10.446,0,0,0,136.717,41.088Zm-122.8-4.054V16.163h20.87v20.87Zm20.87,52.176A10.435,10.435,0,1,1,45.219,78.774,10.435,10.435,0,0,1,34.784,89.209ZM69.567,37.034H48.7V16.163h20.87Zm34.784,52.176a10.435,10.435,0,1,1,10.435-10.435A10.435,10.435,0,0,1,104.351,89.209ZM83.481,37.034V16.163H97.834l17.392,20.87Z" transform="translate(923.604 291.053)" fill="#fc9445"/>
+            </g>
+          </svg>
+          
+            <div class="card-body">
+              <h5 class="card-title"><span class="fs-1">{{ count2 }}</span> In Progress</h5>
+              <br>
+              <p class="card-text">Delivering your order! Thank you for your patience :)</p>
+            </div>
+          </div>
+    </div>
+    <div class="col-sm">
+      <div class="card" style="width: 18rem; border: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="184.657" height="184.657" viewBox="0 0 184.657 184.657" style="margin: 0px auto;">
+            <g id="Group_114" data-name="Group 114" transform="translate(-1447.613 -227.343)">
+              <path id="Path_2201" data-name="Path 2201" d="M92.329,0A92.329,92.329,0,1,1,0,92.329,92.455,92.455,0,0,1,92.329,0Z" transform="translate(1447.613 227.343)" fill="rgba(51,189,60,0.2)"/>
+              <path id="Icon_awesome-thumbs-up" data-name="Icon awesome-thumbs-up" d="M21.257,45.784H4.905A4.905,4.905,0,0,0,0,50.689V99.744a4.905,4.905,0,0,0,4.905,4.905H21.257a4.905,4.905,0,0,0,4.905-4.905V50.689A4.905,4.905,0,0,0,21.257,45.784ZM13.081,96.473a4.905,4.905,0,1,1,4.905-4.905A4.905,4.905,0,0,1,13.081,96.473ZM78.487,16.648c0,8.67-5.308,13.532-6.8,19.325H92.477a12.212,12.212,0,0,1,12.172,11.875A14.8,14.8,0,0,1,100.676,57.9l-.022.022a17.074,17.074,0,0,1-1.9,16.243A16.163,16.163,0,0,1,95.4,89.449c.878,3.6.459,6.658-1.257,9.122-4.172,5.994-14.511,6.078-23.254,6.078H70.31c-9.87,0-17.947-3.6-24.437-6.484-3.261-1.451-7.526-3.247-10.761-3.307A2.453,2.453,0,0,1,32.7,92.405V48.712a2.45,2.45,0,0,1,.727-1.742c8.1-8,11.578-16.471,18.215-23.119,3.026-3.032,4.126-7.611,5.19-12.039C57.744,8.031,59.645,0,63.77,0,68.676,0,78.487,1.635,78.487,16.648Z" transform="translate(1487.619 259.351)" fill="#33bd3c"/>
+            </g>
+          </svg>
+          
+            <div class="card-body">
+              <h5 class="card-title"><span class="fs-1">{{ count3 }}</span> Completed Purchases</h5>
+              <br>
+              <p class="card-text">Wow! Happy with your product? Feel free to tell us <a href="contactUs">more...</a></p>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
